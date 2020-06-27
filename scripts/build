@@ -1,0 +1,43 @@
+#!/usr/bin/env sh
+
+RE_PARTIAL='\(>[[:blank:]]*(.+[[:blank:]]*)\)'
+
+parse_file() {
+  local output="$1"
+
+  # loop through unique filenames read from the expression:
+  # (> path/to/file)
+  for partial_file in $(grep -oE "$RE_PARTIAL" <<< "$output" \
+    | sed -E "s/$RE_PARTIAL/\1/" \
+    | uniq); do
+
+    # create a RegEx for this specific file
+    local re="\(>[[:blank:]]*$partial_file[[:blank:]]*\)"
+
+    # let sed operate on the $output where we
+    # 1. read the contents of $partial_file
+    # 2. remove the include expression
+    output=$(sed -E \
+      -e"/$re/r $partial_file" \
+      -e "s/$re//g" <<< "$output")
+
+  done;
+
+  # and return the output
+  echo "$output"
+}
+
+main() {
+  local files="$1"
+  for template_file in "$files"; do
+    template_content=$(<$template_file)
+    parse_file "$template_content"
+  done
+}
+
+if [[ -z "$1" ]]; then
+  echo "Missing argument 1: filepath or glob." 1>&2
+  exit 2
+fi
+
+main "$1"

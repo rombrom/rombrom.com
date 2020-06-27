@@ -1,0 +1,9 @@
+html {
+  font: 1rem/1.5 normal monospace;
+}
+
+body {
+  white-space: pre;
+}
+
+(> partials/test.css)
