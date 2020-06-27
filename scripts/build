@@ -3,7 +3,7 @@
 RE_ESCAPE='[]\/$*.^[]'
 RE_PARTIAL='\(>[[:blank:]]*(.+[[:blank:]]*)\)'
 
-parse_file() {
+parse() {
   local output="${1:-$(</dev/stdin)}"
 
   # loop through unique filenames read from the expression:
@@ -22,7 +22,7 @@ parse_file() {
     output=$(sed -E \
       -e"/$re/r $partial_file" \
       -e "s/$re//g" <<< "$output" \
-      | parse_file)
+      | parse)
 
   done;
 
@@ -33,8 +33,7 @@ parse_file() {
 main() {
   local files="$1"
   for template_file in "$files"; do
-    template_content=$(<$template_file)
-    parse_file "$template_content"
+    parse < "$template_file"
   done
 }
 
