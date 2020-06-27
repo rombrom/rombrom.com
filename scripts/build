@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+RE_ESCAPE='[]\/$*.^[]'
 RE_PARTIAL='\(>[[:blank:]]*(.+[[:blank:]]*)\)'
 
 parse_file() {
@@ -12,7 +13,8 @@ parse_file() {
     | uniq); do
 
     # create a RegEx for this specific file
-    local re="\(>[[:blank:]]*$partial_file[[:blank:]]*\)"
+    local esc_partial_file=$(sed -E "s/$RE_ESCAPE/\\\&/g" <<< "$partial_file")
+    local re="\(>[[:blank:]]*$esc_partial_file[[:blank:]]*\)"
 
     # let sed operate on the $output where we
     # 1. read the contents of $partial_file
