@@ -4,7 +4,8 @@ RE_ESCAPE='[]\/$*.^[]'
 RE_PARTIAL='\(>[[:blank:]]*(.+[[:blank:]]*)\)'
 
 parse() {
-  local output="${1:-$(</dev/stdin)}"
+  local output="$(</dev/stdin)"
+  local dir="${1:-$PWD}"
 
   # loop through unique filenames read from the expression:
   # (> path/to/file)
@@ -19,10 +20,11 @@ parse() {
     # let sed operate on the $output where we
     # 1. read the contents of $partial_file
     # 2. remove the include expression
+    # 3. recursively parse includes in $partial_file
     output=$(sed -E \
-      -e"/$re/r $partial_file" \
+      -e"/$re/r $dir/$partial_file" \
       -e "s/$re//g" <<< "$output" \
-      | parse)
+      | parse "$(dirname "$partial_file")")
 
   done;
 
