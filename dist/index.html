@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rombrom.com - Computer play time</title>
+
+    <style>
+html {
+  font: 1.25rem/1.5 monospace;
+}
+
+body {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.25;
+}
+
+blockquote {
+  color: slategray;
+}
+
+code {
+  background-color: ivory;
+  color: tomato;
+  padding: 0.125rem 0.25rem;
+}
+
+pre > code {
+  display: block;
+}
+    </style>
+  </head>
+  <body>
+    <h1>HI! This is an internet. It is made by Rommert Zijlstra</h1>
+
+    <p>
+      My previous place on the web hadn't been touched in well over 10 years.
+      Sure, I've tried to re-ignite the engine lots of times but perfectionism
+      always got the best of me. Now I just wanted to start and take anyone
+      interested along for the ride. You can find my first post below.
+    </p>
+
+    <p>Take care,</p>
+
+    <p>Rommert</p>
+
+    <hr />
+
+    <article>
+<h2 id="writing-a-static-site-generator-in-bash-for-shits-and-giggles">Writing a static site generator in bash (for shits and giggles)</h2>
+<p>The current front-end ecosystem heavily flavors static site generation as the best way towards a performant site. Although static site generation has been around for a while, the current surge in interest is fuelled by popular and modern frameworks like Hugo, Gatsby, 11ty, etc. These are truly great products. And coupled with the JAM-stack philosophy touted by, among others, Netlify they are great choices for getting a speedy website up and running.</p>
+<p>But all of these options require a heavy toolchain*—okay, “heavy” might be a too strong of a word in these cases save for maybe Gatsby. It got me thinking: has anyone ever tried to make a static site generator which uses the shell? A quick search yielded no results, so it’s either never been done, or just really not a popular choice. Let alone a wise one.</p>
+<p>Regardless, I was curious as to whether it was possible. Last year I’ve been learning and using VIM on a daily basis. This has also led me down a path of learning all the cool shell programs most of us have installed on our machines by default. I find great joy in learning these and the potential tricks they can add to your workflows and there are really a lot of hidden gems in the dusty old <code>man</code> pages to be found.</p>
+<p>* Please note that I don’t have any issues with the aforementioned toolchains. I snicker when I think of the “heaviest objects in the universe” joke as much as the next guy, but really, node and npm have made groundbreaking changes in the web landscape and I applaud them for that.</p>
+<h3 id="exploration-of-the-problem-space">Exploration of the problem space</h3>
+<p>Before we start clobbering our keyboard for incantations, lets think of some requirements a minimal static site generator needs to have to make it somewhat useful. We should at least support:</p>
+<ul>
+<li>template inheritance: I think current workflows heavily dictate a component-based approach. We want to have templates in which we can include other templates. Additionally it would be great if we could somehow extend base templates as well. Most grown-up template languages support these, so I think we should aim for the same.</li>
+<li>basic data and variables: things like author, title, creation and/or modified date for any generated page. We don’t want to repeat ourselves, so these are a must. We might want to start with one datafile where we can house some globals like the site title, description and related settings. Further along the path we might want to think about handling folder or file-specific overrides.</li>
+<li>collections and pages:</li>
+</ul>
+<p>But there are some restrictions in our environment. We want to save people from <code>brew</code>ing, <code>apt-get</code>ting or <code>apk</code>-ing extra tools needed for this to work. We want to use programs which are used on practically every *NIX system, so: things like <code>cat</code>, <code>awk</code>, <code>grep</code>, <code>sed</code> and the shell built-ins are allowed, but other programs like <code>envsubst</code> or <code>pandoc</code> are right out.</p>
+<h3 id="attempts-successes-and-caveats">Attempts, successes and caveats</h3>
+<p>Most “how-to” posts on the inter of nets feature a step-by-step explanation of how to make something work. Here I want to do something different. Programming doesn’t consist of a happy path. There are assumptions, pitfalls and mistakes we need to deal with on a daily basis, so I want to document these. Instead of a how-to this is literally a journal of working on this project. I’ll make assumptions, try ugly hacks, backtrack, re-implement, and take notes of any process or progress or lack thereof. Maybe you’ll learn something from this, I definitely did.</p>
+<h4 id="get-templates-grep-for-includes-read-the-partial-with-sed">Get templates, grep for includes, read the partial with sed</h4>
+<p>Let’s start with the template parser. My first thought was: we need a syntax which makes it clear that we’re including a template. Nothing final yet, but let’s go with <code>(&gt; path/to/file)</code> for now. The first task is to turn this into a regular expression (a proper parser might be more ideal, but lets try to keep it simple for now; it’s the shell man!). Then we loop through all <code>*.html</code> files in an arbitrary directory, see if we have matching include expressions, if so loop through the list of files and replace the include expression with its respective file contents.</p>
+<p>This is where I stumbled upon something cool. If you’re somewhat familiar with <code>sed</code>, you probably know about the <code>s</code> function. But it’s much, much more than just a tool for replacing strings. It can also read files and write them to the address space with the <code>r</code> function.</p>
+<pre><code>sed -e &#39;/pattern/r otherfile.txt&#39; somefile.txt</code></pre>
+<p>This expression reads <code>otherfile.txt</code> (if it exists) and pastes its contents on the line below “pattern” in <code>somefile.txt</code>. Nifty! <code>sed</code> is even more powerful than that; you can branch to other expressions and use labels for GOTO-kind of functionality, but I digress.</p>
+<p>Let’s see what we can come up with.</p>
+<pre><code>#!/usr/bin/env sh
+
+RE_PARTIAL=&#39;\(&gt;[[:blank:]]*(.+[[:blank:]]*)\)&#39;
+
+parse_file() {
+  local output=&quot;$1&quot;
+
+  # loop through unique filenames read from the expression:
+  # (&gt; path/to/file)
+  # 1. grep for our pattern and only list the result (-o)
+  # 2. remove the expression syntax and keep the file path
+  # 3. make sure we have no duplicates
+  for partial_file in $(grep -oE &quot;$RE_PARTIAL&quot; &lt;&lt;&lt; &quot;$output&quot; \
+    | sed -E &quot;s/$RE_PARTIAL/\1/&quot; \
+    | uniq); do
+
+    # create a RegEx for this specific file
+    local re=&quot;\(&gt;[[:blank:]]*$partial_file[[:blank:]]*\)&quot;
+
+    # let sed operate on the $output where we
+    # 1. read the contents of $partial_file
+    # 2. remove the include expression
+    output=$(sed -E \
+      -e&quot;/$re/r $partial_file&quot; \
+      -e &quot;s/$re//g&quot; &lt;&lt;&lt; &quot;$output&quot;)
+
+  done;
+
+  # and return the output
+  echo &quot;$output&quot;
+}
+
+main() {
+  local files=&quot;$1&quot;
+  for template_file in &quot;$files&quot;; do
+    template_content=$(&lt;$template_file)
+    parse_file &quot;$template_content&quot;
+  done
+}
+
+if [[ -z &quot;$1&quot; ]]; then
+  echo &quot;Missing argument 1: filepath or glob.&quot; 1&gt;&amp;2
+  exit 2
+fi
+
+main &quot;$1&quot;</code></pre>
+<p>So this works, but it has a few issues. We can’t have includes in subdirectories or nested includes. The partials can only be included at the top-level, e.g. the ‘templates’. This is because 1) the <code>$re</code> we construct isn’t escaped, so <code>sed</code> throws an error when encountering a <code>/</code> in <code>$partial_file</code>. Let’s escape this:</p>
+<pre><code>diff --git a/scripts/build b/scripts/build
+index aaa6c2b..de2dc22 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -2,0 +3 @@
++RE_ESCAPE=&#39;[]\/$*.^[]&#39;
+@@ -15 +16,2 @@ parse_file() {
+-    local re=&quot;\(&gt;[[:blank:]]*$partial_file[[:blank:]]*\)&quot;
++    local esc_partial_file=$(sed -E &quot;s/$RE_ESCAPE/\&amp;/g&quot; &lt;&lt;&lt; &quot;$partial_file&quot;)
++    local re=&quot;\(&gt;[[:blank:]]*$esc_partial_file[[:blank:]]*\)&quot;</code></pre>
+<p>This solves includes in subdirectories but any self-respecting template parser would allow for arbitrary levels of nesting. Say we have a template in <code>partials/a.html</code> with an include <code>(&gt; b.html)</code>, we would expect it to insert the contents of <code>partials/b.html</code>.</p>
+<p>This is where I encountered some hurdles. Ideally we’d just call the <code>parse\_file</code> function recursively on the template. There are a few ways we can do this. I opted for allowing <code>parse_file</code> to read from STDIN:</p>
+<pre><code>diff --git a/scripts/build b/scripts/build
+index de2dc22..2fb7487 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -7 +7 @@ parse_file() {
+-  local output=&quot;$1&quot;
++  local output=&quot;${1:-$(&lt;/dev/stdin)}&quot;
+@@ -24 +24,2 @@ parse_file() {
+-      -e &quot;s/$re//g&quot; &lt;&lt;&lt; &quot;$output&quot;)
++      -e &quot;s/$re//g&quot; &lt;&lt;&lt; &quot;$output&quot; \
++      | parse_file)</code></pre>
+<p>This allows include expressions in partials to be parsed, but it fails silently for the scenario described above. We still need to use file paths in include expressions relative to the current working directory. There might be a few solutions we could try. Lets first do some housekeeping. <code>parse_file</code> is a bit of a strange function. I’d expect the parameter to be a file, but it’s a string, so:</p>
+<pre><code>diff --git a/scripts/build b/scripts/build
+index 2fb7487..3b545ce 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -6 +6 @@ RE_PARTIAL=&#39;\(&gt;[[:blank:]]*(.+[[:blank:]]*)\)&#39;
+-parse_file() {
++parse() {
+@@ -25 +25 @@ parse_file() {
+-      | parse_file)
++      | parse)
+@@ -36,2 +36 @@ main() {
+-    template_content=$(&lt;$template_file)
+-    parse_file &quot;$template_content&quot;
++    parse &lt; &quot;$template_file&quot;</code></pre>
+<p>Awesome. Now how do we get <code>sed</code> to read from a file referenced in a subdirectory? I think we have two options. Modify <code>parse</code> to have a subdirectory as an argument which we prepend to the <code>$partial_file</code>, or <code>cd</code> into the directory of the currently parsed partial. Note that <code>sed</code>’s read file function fails silently. This seems better than checking in bash whether the subdirectory exists and, if so, <code>cd</code> into it. Adding an argument to <code>parse</code>, however, is now a bit awkward, since we defaulted the first argument to read from <code>/dev/stdin</code>. Let’s just make this the default. Either we pipe content to this function or read from a file using the shell’s read from file functionality:</p>
+<pre><code>diff --git a/scripts/build b/scripts/build
+index 3b545ce..cfaf717 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -7 +7,2 @@ parse() {
+-  local output=&quot;${1:-$(&lt;/dev/stdin)}&quot;
++  local output=&quot;$(&lt;/dev/stdin)&quot;
++  local dir=&quot;${1:-$PWD}&quot;
+@@ -21,0 +23 @@ parse() {
++    # 3. recursively parse includes in $partial_file
+@@ -23 +25 @@ parse() {
+-      -e&quot;/$re/r $partial_file&quot; \
++      -e&quot;/$re/r $dir/$partial_file&quot; \
+@@ -25 +27 @@ parse() {
+-      | parse)
++      | parse &quot;$(dirname &quot;$partial_file&quot;)&quot;)</code></pre>
+<p>Wham! Bam! Thank you, mam! We can recursively walk templates and partials! However, this only works properly when we put the include expressions on it’s own line:</p>
+<pre><code>&lt;div&gt;(&gt; partial.html)&lt;/div&gt;
+&lt;!-- sed will place contents here --&gt;</code></pre>
+<p>That’s a bit awkward. Although we can technically introduce the limitation that any expression in our language needs to be on it’s own line this isn’t always desired. Why does <code>sed</code> do this? Let’s consult the manual.</p>
+<blockquote>
+<p>Normally, sed cyclically copies a line of input, not including its terminating newline character, into a pattern space, (…), applies all of the commands with addresses that select that pattern space, copies the pattern space to the standard output, appending a new-line, and deletes the pattern space.</p>
+</blockquote>
+<p>Okay, so <code>sed</code> operates on any input line by line. What about the <code>r</code> function? I’ve marked the relevant bit.</p>
+<blockquote>
+<p>[1addr]r file Copy the contents of file to the standard output <em>immediately before the next attempt to read a line of input</em>. If file cannot be read for any reason, it is silently ignored and no error condition is set.</p>
+</blockquote>
+<p>This makes making use of <code>sed</code>’s <code>r</code> function a bit awkward. We either need to transform the template which is currently being operated upon to always have newlines after a include expression, or we need to remove or escape any newlines in the partial before passing it’s contents to <code>s</code>.</p>
+<p>Or maybe I just don’t know <code>sed</code> well enough. BRB.</p>
+    </article>
+  </body>
+</html>

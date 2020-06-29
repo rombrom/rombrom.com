@@ -1,7 +1,13 @@
 #!/usr/bin/env sh
 
+set -e
+
 RE_ESCAPE='[]\/$*.^[]'
 RE_PARTIAL='\(>[[:blank:]]*(.+[[:blank:]]*)\)'
+
+esc_re() {
+  echo $(sed -E "s/$RE_ESCAPE/\\\&/g" < /dev/stdin)
+}
 
 parse() {
   local output="$(</dev/stdin)"
@@ -17,16 +23,18 @@ parse() {
     | uniq); do
 
     # create a RegEx for this specific file
-    local esc_partial_file=$(sed -E "s/$RE_ESCAPE/\\\&/g" <<< "$partial_file")
+    local esc_partial_file=$(esc_re <<< "$partial_file")
     local re="\(>[[:blank:]]*$esc_partial_file[[:blank:]]*\)"
 
     # let sed operate on the $output where we
-    # 1. read the contents of $partial_file
-    # 2. remove the include expression
-    # 3. recursively parse includes in $partial_file
+    # 1. replace expression with content
+    # 2. recursively parse includes in $partial_file
     output=$(sed -E \
-      -e "/$re/r $dir/$partial_file" \
-      -e "s/$re//g" <<< "$output" \
+      -e "/$re/ {
+          r $dir/$partial_file
+          d
+        }" \
+      <<< "$output" \
       | parse "$(dirname "$partial_file")")
 
   done;
