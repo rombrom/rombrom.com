@@ -9,6 +9,9 @@ parse() {
 
   # loop through unique filenames read from the expression:
   # (> path/to/file)
+  # 1. grep for our pattern and only list the result (-o)
+  # 2. remove the expression syntax and keep the file path
+  # 3. make sure we have no duplicates
   for partial_file in $(grep -oE "$RE_PARTIAL" <<< "$output" \
     | sed -E "s/$RE_PARTIAL/\1/" \
     | uniq); do
@@ -22,7 +25,7 @@ parse() {
     # 2. remove the include expression
     # 3. recursively parse includes in $partial_file
     output=$(sed -E \
-      -e"/$re/r $dir/$partial_file" \
+      -e "/$re/r $dir/$partial_file" \
       -e "s/$re//g" <<< "$output" \
       | parse "$(dirname "$partial_file")")
 

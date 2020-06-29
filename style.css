@@ -8,4 +8,4 @@ body {
   margin-right: auto;
 }
 
-(> ./partials/test.css)
+(> partials/test.css)

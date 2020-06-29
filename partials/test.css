@@ -2,4 +2,4 @@ body {
   color: hotpink;
 }
 
-(> ./test-subdir.css)
+(> test-subdir.css)
