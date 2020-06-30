@@ -44,9 +44,9 @@ useful. We should at least support:
   like the site title, description and related settings. Further along the path we
   might want to think about handling folder or file-specific overrides.
 - collections and pages: ideally we'd want to introduce some ✨ magic ✨ which
-  allows us to handle collections (like a blag) and pages. It would be tedious to
-  manually update a "latest posts" section for instance. We want the site
-  generator to handle this.
+  allows us to handle collections (like a [blag](https://xkcd.com/148/)) and
+  pages. It would be tedious to manually update a "latest posts" section for
+  instance. We want the site generator to handle this.
 
 But there are some restrictions in our environment. We want to save people from
 `brew`ing, `apt-get`ting or `apk`-ing extra tools needed for this to work. We
