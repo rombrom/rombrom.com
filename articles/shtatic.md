@@ -248,7 +248,10 @@ That's a bit awkward. Although we can technically introduce the limitation that
 any expression in our language needs to be on it's own line this isn't always
 desired. Why does `sed` do this? Let's consult the manual.
 
-> Normally, sed cyclically copies a line of input, not including its terminating newline character, into a pattern space, (...), applies all of the commands with addresses that select that pattern space, copies the pattern space to the standard output, appending a new-line, and deletes the pattern space.
+> Normally, sed cyclically copies a line of input, not including its terminating
+> newline character, into a pattern space, (...), applies all of the commands
+> with addresses that select that pattern space, copies the pattern space to the
+> standard output, appending a new-line, and deletes the pattern space.
 
 Okay, so `sed` operates on any input line by line. What about the `r` function?
 I've marked the relevant bit.
