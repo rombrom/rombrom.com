@@ -60,7 +60,7 @@ pre > code {
 
     <article>
 <h2 id="writing-a-static-site-generator-in-bash-for-shits-and-giggles">Writing a static site generator in bash (for shits and giggles)</h2>
-<p>The current front-end ecosystem heavily flavors static site generation as the best way towards a performant site. Although static site generation has been around for a while, the current surge in interest is fuelled by popular and modern frameworks like Hugo, Gatsby, 11ty, etc. These are truly great products. And coupled with the JAM-stack philosophy touted by, among others, Netlify they are great choices for getting a speedy website up and running.</p>
+<p>The current front-end ecosystem heavily flavors static site generation as the best way towards a performant site. Although static site generation has been around for a while, the current surge in interest is fuelled by popular and modern frameworks like <a href="https://gohugo.io">Hugo</a>, <a href="https://www.gatsbyjs.org">Gatsby</a>, <a href="https://www.11ty.dev">11ty</a>, etc. These are truly great products. And coupled with the JAM-stack philosophy touted by, among others, Netlify they are great choices for getting a speedy website up and running.</p>
 <p>But all of these options require a heavy toolchain*—okay, “heavy” might be a too strong of a word in these cases save for maybe Gatsby. It got me thinking: has anyone ever tried to make a static site generator which uses the shell? A quick search yielded no results, so it’s either never been done, or just really not a popular choice. Let alone a wise one.</p>
 <p>Regardless, I was curious as to whether it was possible. Last year I’ve been learning and using VIM on a daily basis. This has also led me down a path of learning all the cool shell programs most of us have installed on our machines by default. I find great joy in learning these and the potential tricks they can add to your workflows and there are really a lot of hidden gems in the dusty old <code>man</code> pages to be found.</p>
 <p>* Please note that I don’t have any issues with the aforementioned toolchains. I snicker when I think of the “heaviest objects in the universe” joke as much as the next guy, but really, node and npm have made groundbreaking changes in the web landscape and I applaud them for that.</p>
@@ -69,7 +69,7 @@ pre > code {
 <ul>
 <li>template inheritance: I think current workflows heavily dictate a component-based approach. We want to have templates in which we can include other templates. Additionally it would be great if we could somehow extend base templates as well. Most grown-up template languages support these, so I think we should aim for the same.</li>
 <li>basic data and variables: things like author, title, creation and/or modified date for any generated page. We don’t want to repeat ourselves, so these are a must. We might want to start with one datafile where we can house some globals like the site title, description and related settings. Further along the path we might want to think about handling folder or file-specific overrides.</li>
-<li>collections and pages:</li>
+<li>collections and pages: ideally we’d want to introduce some ✨ magic ✨ which allows us to handle collections (like a blag) and pages. It would be tedious to manually update a “latest posts” section for instance. We want the site generator to handle this.</li>
 </ul>
 <p>But there are some restrictions in our environment. We want to save people from <code>brew</code>ing, <code>apt-get</code>ting or <code>apk</code>-ing extra tools needed for this to work. We want to use programs which are used on practically every *NIX system, so: things like <code>cat</code>, <code>awk</code>, <code>grep</code>, <code>sed</code> and the shell built-ins are allowed, but other programs like <code>envsubst</code> or <code>pandoc</code> are right out.</p>
 <h3 id="attempts-successes-and-caveats">Attempts, successes and caveats</h3>
@@ -194,7 +194,7 @@ index 3b545ce..cfaf717 100755
 <p>[1addr]r file Copy the contents of file to the standard output <em>immediately before the next attempt to read a line of input</em>. If file cannot be read for any reason, it is silently ignored and no error condition is set.</p>
 </blockquote>
 <p>This makes making use of <code>sed</code>’s <code>r</code> function a bit awkward. We either need to transform the template which is currently being operated upon to always have newlines after a include expression, or we need to remove or escape any newlines in the partial before passing it’s contents to <code>s</code>.</p>
-<p>Or maybe I just don’t know <code>sed</code> well enough. BRB.</p>
+<p>Or maybe I just don’t know <code>sed</code> well enough. <a href="https://www.grymoire.com/Unix/Sed.html">BRB</a>.</p>
     </article>
   </body>
 </html>

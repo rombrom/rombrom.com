@@ -3,9 +3,11 @@
 The current front-end ecosystem heavily flavors static site generation as the
 best way towards a performant site. Although static site generation has been
 around for a while, the current surge in interest is fuelled by popular and
-modern frameworks like Hugo, Gatsby, 11ty, etc. These are truly great products.
-And coupled with the JAM-stack philosophy touted by, among others, Netlify they
-are great choices for getting a speedy website up and running.
+modern frameworks like [Hugo](https://gohugo.io),
+[Gatsby](https://www.gatsbyjs.org), [11ty](https://www.11ty.dev), etc. These are
+truly great products. And coupled with the JAM-stack philosophy touted by,
+among others, Netlify they are great choices for getting a speedy website
+up and running.
 
 But all of these options require a heavy toolchain\*—okay, "heavy" might be a too
 strong of a word in these cases save for maybe Gatsby. It got me thinking: has
@@ -261,4 +263,5 @@ transform the template which is currently being operated upon to always have
 newlines after a include expression, or we need to remove or escape any newlines
 in the partial before passing it's contents to `s`.
 
-Or maybe I just don't know `sed` well enough. BRB.
+Or maybe I just don't know `sed` well enough.
+[BRB](https://www.grymoire.com/Unix/Sed.html).
