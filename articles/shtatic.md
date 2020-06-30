@@ -31,9 +31,20 @@ Before we start clobbering our keyboard for incantations, lets think of some
 requirements a minimal static site generator needs to have to make it somewhat
 useful. We should at least support:
 
-- template inheritance: I think current workflows heavily dictate a component-based approach. We want to have templates in which we can include other templates. Additionally it would be great if we could somehow extend base templates as well. Most grown-up template languages support these, so I think we should aim for the same.
-- basic data and variables: things like author, title, creation and/or modified date for any generated page. We don't want to repeat ourselves, so these are a must. We might want to start with one datafile where we can house some globals like the site title, description and related settings. Further along the path we might want to think about handling folder or file-specific overrides.
-- collections and pages:
+- template inheritance: I think current workflows heavily dictate a
+  component-based approach. We want to have templates in which we can include
+  other templates. Additionally it would be great if we could somehow extend base
+  templates as well. Most grown-up template languages support these, so I think we
+  should aim for the same.
+- basic data and variables: things like author, title, creation and/or modified
+  date for any generated page. We don't want to repeat ourselves, so these are a
+  must. We might want to start with one datafile where we can house some globals
+  like the site title, description and related settings. Further along the path we
+  might want to think about handling folder or file-specific overrides.
+- collections and pages: ideally we'd want to introduce some ✨ magic ✨ which
+  allows us to handle collections (like a blag) and pages. It would be tedious to
+  manually update a "latest posts" section for instance. We want the site
+  generator to handle this.
 
 But there are some restrictions in our environment. We want to save people from
 `brew`ing, `apt-get`ting or `apk`-ing extra tools needed for this to work. We
