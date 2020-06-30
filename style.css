@@ -31,4 +31,5 @@ code {
 
 pre > code {
   display: block;
+  overflow-x: auto;
 }
