@@ -2,57 +2,130 @@
 
 set -e
 
+args=""
+cmd=""
+
+option_delimiters="()"
+option_dist="./dist"
+option_verbose=false
+
 RE_ESCAPE='[]\/$*.^[]'
-RE_PARTIAL='\(>[[:blank:]]*(.+[[:blank:]]*)\)'
+RE_INCLUDE="\\${option_delimiters:0:1}>[[:blank:]]*(.+[[:blank:]]*)\\${option_delimiters:1:1}"
+
+log() {
+  if [[ "$option_verbose" = true ]]; then
+    printf "%s\n" "$@"
+  fi
+}
+
+err() {
+  printf "%s\n" "$@" >&2
+  exit 1
+}
 
 esc_re() {
   echo $(sed -E "s/$RE_ESCAPE/\\\&/g" < /dev/stdin)
 }
 
 parse() {
-  local output="$(</dev/stdin)"
-  local dir="${1:-$PWD}"
+  local output="$1"
+  local context="$2"
 
-  # loop through unique filenames read from the expression:
-  # (> path/to/file)
-  # 1. grep for our pattern and only list the result (-o)
-  # 2. remove the expression syntax and keep the file path
-  # 3. make sure we have no duplicates
-  for partial_file in $(grep -oE "$RE_PARTIAL" <<< "$output" \
-    | sed -E "s/$RE_PARTIAL/\1/" \
-    | uniq); do
+  log "parse($output, $context)"
 
-    # create a RegEx for this specific file
-    local esc_partial_file=$(esc_re <<< "$partial_file")
-    local re="\(>[[:blank:]]*$esc_partial_file[[:blank:]]*\)"
+  if [[ -d "$context" ]]; then
+    cd "$context"
+    log "PWD: $PWD"
+  fi
 
-    # let sed operate on the $output where we
-    # 1. replace expression with content
-    # 2. recursively parse includes in $partial_file
-    output=$(sed -E \
-      -e "/$re/ {
-          r $dir/$partial_file
-          d
-        }" \
-      <<< "$output" \
-      | parse "$(dirname "$partial_file")")
+  output="$(parse_includes "$output")"
 
-  done;
-
-  # and return the output
   echo "$output"
 }
 
-main() {
-  local files="$1"
-  for template_file in "$files"; do
-    parse < "$template_file"
+parse_includes() {
+  local output="$1"
+
+  # 1. grep for our pattern and only list the result (-o)
+  # 2. remove the expression syntax and keep the file path
+  # 3. make sure we have no duplicates
+  local includes="$(grep -oE "$RE_INCLUDE" <<< "$output" \
+    | sed -E "s/$RE_INCLUDE/\1/" \
+    | uniq)"
+
+  # if there are no includes, bail
+  if [[ -z "$includes" ]]; then
+    echo "$output"
+    return
+  fi
+
+  # loop through unique filenames read from the expression:
+  # (> path/to/file)
+  # NOTE: I'm not sure why, but using for...in does not work here
+  # the altnerative is using a whike loop which reads every line
+  # of input from a variable passed to while with <<<
+  while read path; do
+    local content="$(cat $path)"
+
+    log "path: $path"
+
+    # create a RegEx for this specific file
+    local esc_path=$(esc_re <<< "$path")
+    local re="\(>[[:blank:]]*$esc_path[[:blank:]]*\)"
+
+    # use awk gsub to replace any include expressions
+    # with the content of the partial.
+    # NOTE: This was a wild ride. sed, being heavily line based made it
+    # difficult to work with ranges. awk on MacOS (apparently) didn't want
+    # to play nice with variables passed with awk -v.
+    # Thank you, fprimex
+    # https://github.com/hashicorp-community/tf-helper/issues/1#issuecomment-490656096
+    # replace the include expression with the partial's content
+    output="$(awk "BEGIN {
+        content=ARGV[1]; delete ARGV[1];
+        output=ARGV[2]; delete ARGV[2];
+        gsub(/$re/, content, output);
+        print output
+      }" "$content" "$output" \
+    )"
+
+    log "output: $output"
+
+    # 2. recursively parse includes in $partial_file
+    output="$(parse "$output" $(dirname "$path"))"
+
+  done <<< "$includes"
+
+  echo "$output"
+}
+
+
+parse_files() {
+  local cwd="$PWD"
+
+  for path in $args; do
+    local realpath="$cwd/$path"
+    log "reading: $realpath"
+
+    if [[ ! -f "$realpath" ]]; then
+      err "File not found: $path"
+    fi
+
+    parse "$(<$realpath)" "$(dirname $realpath)"
   done
 }
 
-if [[ -z "$1" ]]; then
-  echo "Missing argument 1: filepath or glob." 1>&2
-  exit 2
-fi
+while [[ "$#" -ne 0 ]]; do
+  case "$1" in
+    -V | --verbose)
+      option_verbose=true
+      ;;
+    *)
+      args+="$1 "
+      ;;
+  esac
+  shift
+done
 
-main "$1"
+log "args: $args"
+parse_files "$args"
