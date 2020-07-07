@@ -23,5 +23,9 @@
 @test "input non-existent file" {
   run scripts/build /dev/null
   [[ "$status" -eq 1 ]]
+}
+
+@test "input absolute path" {
+  run scripts/build /dev/null
   [[ "$output" = "File not found: /dev/null" ]]
 }
