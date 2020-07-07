@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -e
 
@@ -104,6 +104,9 @@ parse_includes() {
 
     # recursively parse includes in $partial_file
     output="$(parse "$output" $(dirname "$path"))"
+
+  # TODO: the <<< syntax does not work in sh. It does in bash,
+  # zsh and probably others. This feels like coding for IE6 again.
   done <<< "$includes"
 
   printf '%s\n' "$output"
