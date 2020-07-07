@@ -34,6 +34,10 @@ esc_re() {
   printf '%s' "$1" | sed "s/[]})\/.?^|$+*({[]/\\\&/g"
 }
 
+esc_ref() {
+  printf '%s' "$1" | sed "s/[&]/\\\&/g"
+}
+
 # parses a string for shmatic expressions and returns an evaluated string
 # @param string
 # @param directory
@@ -84,7 +88,7 @@ parse_includes() {
   while read -r includeRecord; do
     local path="${includeRecord%:*}"
     local exp_re="$(esc_re "${includeRecord#*:}")"
-    local content="$(cat $path)"
+    local content="$(esc_ref "$(cat $path 2>&1)")"
 
     # use awk gsub to replace any include expressions
     # with the content of the partial.

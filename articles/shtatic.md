@@ -1,4 +1,4 @@
-# Writing a static site generator in bash (for shits and giggles)
+# Writing a static site generator in bash (for sh\*ts and giggles)
 
 The current front-end ecosystem heavily flavors static site generation as the
 best way towards a performant site. Although static site generation has been
@@ -47,6 +47,9 @@ useful. We should at least support:
   allows us to handle collections (like a [blag](https://xkcd.com/148/)) and
   pages. It would be tedious to manually update a "latest posts" section for
   instance. We want the site generator to handle this.
+- last, we might want to add some more magic; writing in HTML is a tad awkward.
+  Writing a markdown parser in bash maybe even more so. Maybe I want to add
+  support for external parsing programs, like [pandoc](https://pandoc.org)?
 
 But there are some restrictions in our environment. We want to save people from
 `brew`ing, `apt-get`ting or `apk`-ing extra tools needed for this to work. We
@@ -54,7 +57,7 @@ want to use programs which are used on practically every \*NIX system, so:
 things like `cat`, `awk`, `grep`, `sed` and the shell built-ins are allowed, but other
 programs like `envsubst` or `pandoc` are right out.
 
-## Attempts, successes and caveats
+### Attempts, successes and caveats
 
 Most "how-to" posts on the inter of nets feature a step-by-step explanation of
 how to make something work. Here I want to do something different. Programming
@@ -65,7 +68,7 @@ assumptions, try ugly hacks, backtrack, re-implement, and take notes of any
 process or progress or lack thereof. Maybe you'll learn something from this, I
 definitely did.
 
-### Get templates, grep for includes, read the partial with sed
+## Get templates, grep for includes, read the partial with sed
 
 Let's start with the template parser. My first thought was: we need a syntax
 which makes it clear that we're including a template. Nothing final yet, but
@@ -88,156 +91,9 @@ sed -e '/pattern/r otherfile.txt' somefile.txt
 This expression reads `otherfile.txt` (if it exists) and pastes its contents on
 the line below "pattern" in `somefile.txt`. Nifty! `sed` is even more powerful
 than that; you can branch to other expressions and use labels for GOTO-kind of
-functionality, but I digress.
-
-Let's see what we can come up with.
-
-```
-#!/usr/bin/env sh
-
-RE_PARTIAL='\(>[[:blank:]]*(.+[[:blank:]]*)\)'
-
-parse_file() {
-  local output="$1"
-
-  # loop through unique filenames read from the expression:
-  # (> path/to/file)
-  # 1. grep for our pattern and only list the result (-o)
-  # 2. remove the expression syntax and keep the file path
-  # 3. make sure we have no duplicates
-  for partial_file in $(grep -oE "$RE_PARTIAL" <<< "$output" \
-    | sed -E "s/$RE_PARTIAL/\1/" \
-    | uniq); do
-
-    # create a RegEx for this specific file
-    local re="\(>[[:blank:]]*$partial_file[[:blank:]]*\)"
-
-    # let sed operate on the $output where we
-    # 1. read the contents of $partial_file
-    # 2. remove the include expression
-    output=$(sed -E \
-      -e"/$re/r $partial_file" \
-      -e "s/$re//g" <<< "$output")
-
-  done;
-
-  # and return the output
-  echo "$output"
-}
-
-main() {
-  local files="$1"
-  for template_file in "$files"; do
-    template_content=$(<$template_file)
-    parse_file "$template_content"
-  done
-}
-
-if [[ -z "$1" ]]; then
-  echo "Missing argument 1: filepath or glob." 1>&2
-  exit 2
-fi
-
-main "$1"
-```
-
-So this works, but it has a few issues. We can't have includes in subdirectories
-or nested includes. The partials can only be included at the top-level, e.g. the
-'templates'. This is because 1) the `$re` we construct isn't escaped, so `sed`
-throws an error when encountering a `/` in `$partial_file`. Let's escape this:
-
-```
-diff --git a/scripts/build b/scripts/build
-index aaa6c2b..de2dc22 100755
---- a/scripts/build
-+++ b/scripts/build
-@@ -2,0 +3 @@
-+RE_ESCAPE='[]\/$*.^[]'
-@@ -15 +16,2 @@ parse_file() {
--    local re="\(>[[:blank:]]*$partial_file[[:blank:]]*\)"
-+    local esc_partial_file=$(sed -E "s/$RE_ESCAPE/\\\&/g" <<< "$partial_file")
-+    local re="\(>[[:blank:]]*$esc_partial_file[[:blank:]]*\)"
-```
-
-This solves includes in subdirectories but any self-respecting template parser
-would allow for arbitrary levels of nesting. Say we have a template in
-`partials/a.html` with an include `(> b.html)`, we would expect it to insert the
-contents of `partials/b.html`.
-
-This is where I encountered some hurdles. Ideally we'd just call the
-`parse\_file` function recursively on the template. There are a few ways we can
-do this. I opted for allowing `parse_file` to read from STDIN:
-
-```
-diff --git a/scripts/build b/scripts/build
-index de2dc22..2fb7487 100755
---- a/scripts/build
-+++ b/scripts/build
-@@ -7 +7 @@ parse_file() {
--  local output="$1"
-+  local output="${1:-$(</dev/stdin)}"
-@@ -24 +24,2 @@ parse_file() {
--      -e "s/$re//g" <<< "$output")
-+      -e "s/$re//g" <<< "$output" \
-+      | parse_file)
-```
-
-This allows include expressions in partials to be parsed, but it fails silently
-for the scenario described above. We still need to use file paths in include
-expressions relative to the current working directory. There might be a few
-solutions we could try. Lets first do some housekeeping. `parse_file` is a
-bit of a strange function. I'd expect the parameter to be a file, but it's a
-string, so:
-
-```
-diff --git a/scripts/build b/scripts/build
-index 2fb7487..3b545ce 100755
---- a/scripts/build
-+++ b/scripts/build
-@@ -6 +6 @@ RE_PARTIAL='\(>[[:blank:]]*(.+[[:blank:]]*)\)'
--parse_file() {
-+parse() {
-@@ -25 +25 @@ parse_file() {
--      | parse_file)
-+      | parse)
-@@ -36,2 +36 @@ main() {
--    template_content=$(<$template_file)
--    parse_file "$template_content"
-+    parse < "$template_file"
-```
-
-Awesome. Now how do we get `sed` to read from a file referenced in a
-subdirectory? I think we have two options. Modify `parse` to have a subdirectory
-as an argument which we prepend to the `$partial_file`, or `cd` into the
-directory of the currently parsed partial. Note that `sed`'s read file function
-fails silently. This seems better than checking in bash whether the subdirectory
-exists and, if so, `cd` into it. Adding an argument to `parse`, however, is now
-a bit awkward, since we defaulted the first argument to read from `/dev/stdin`.
-Let's just make this the default. Either we pipe content to this function or
-read from a file using the shell's read from file functionality:
-
-```
-diff --git a/scripts/build b/scripts/build
-index 3b545ce..cfaf717 100755
---- a/scripts/build
-+++ b/scripts/build
-@@ -7 +7,2 @@ parse() {
--  local output="${1:-$(</dev/stdin)}"
-+  local output="$(</dev/stdin)"
-+  local dir="${1:-$PWD}"
-@@ -21,0 +23 @@ parse() {
-+    # 3. recursively parse includes in $partial_file
-@@ -23 +25 @@ parse() {
--      -e"/$re/r $partial_file" \
-+      -e"/$re/r $dir/$partial_file" \
-@@ -25 +27 @@ parse() {
--      | parse)
-+      | parse "$(dirname "$partial_file")")
-```
-
-Wham! Bam! Thank you, mam! We can recursively walk templates and partials!
-However, this only works properly when we put the include expressions on it's
-own line:
+functionality, but I digress. `sed` shines when doing line-based operations, but
+quickly becomes tedious if you want inline operations. In the case of inline
+partials for example:
 
 ```
 <div>(> partial.html)</div>
@@ -268,3 +124,91 @@ in the partial before passing it's contents to `s`.
 
 Or maybe I just don't know `sed` well enough.
 [BRB](https://www.grymoire.com/Unix/Sed.html).
+
+---
+
+And I'm back. [Bruce Barnett's tutorial on
+`sed`](https://www.grymoire.com/Unix/Sed.html) provided some very useful
+information. Well, everything was also in the `man` page, but sometimes you need
+some examples and context and, well, different wording to grok something.
+
+One of the better `sed` incantations I came up with was the following:
+
+```
+output="$(sed -E -e "/$re/ {
+  r $path
+  d
+}" <<< "$output")"
+```
+
+It's definitely somewhat more elegant than deleting the `$re` with `s` but
+unfortunately, due to `sed`'s line-based approach, it cannot paste content
+inline. We'll need another solution for this. `sed` just isn't going to work for
+this use-case.
+
+### Let's get `awk`ward!
+
+So I've spent some days learning and tinkering. It became clear that `sed`
+wasn't cut out for the task at hand. Luckily we have some more tools to our
+disposal. Enter `awk`.
+
+I use `awk` sporadically to get shell scripts to output a specific column. This
+is especially handy when you're working with server logs for example. Say you
+have a nginx server somewhere and you want some data on response codes: how many
+successes vs errors, for example. Depending on your log format, you could do
+this:
+
+```
+zcat access.log.*.gz | awk '{print $9}' | sort -r | uniq -c | sort -r
+```
+
+Which would give you the number of times a certain response code has been
+returned by nginx:
+
+```
+   9199 200
+   2919 500
+   2888 304
+   1703 429
+   1425 404
+    502 301
+     39 206
+     19 400
+     10 302
+      7 405
+      4 403
+      2 401
+```
+
+Although I've read about `awk`'s small but powerful language, I mostly used it
+for scenario's like that. Boy, was I in for a treat. Just like `sed`, `awk`
+operates on patterns, but it includes some more powerful functions to work with.
+As an added bonus, the syntax is a _lot_ less obtuse than `sed`'s. For example,
+instead of `s/pattern/replacement/flags` we get proper functions like
+`sub(pattern, replacement, context)` and `gsub` (like `s/p/r/g`. Also, you
+can pass along variables to be used in your `awk` script by using the `-v` flag
+like thus:
+
+```
+$ TEST="awesome"
+$ echo 'Hello, world!' | awk -v str="$TEST" '{ gsub(/world/, str); print }'
+```
+
+But `awk`, like `sed`, just doesn't like newlines—at least, the `awk` shipped
+with macOS. If our string contains one we get an error (note the literal
+newline; using a `\n` works):
+
+```
+$ TEST="awsome
+"
+$ echo 'Hello, world!' | awk -v str="$TEST" '{ gsub(/world/, str); print }'
+awk: newline in string awesome
+... at source line 1
+```
+
+After some digging, I happened upon an issue from a terraform-helper from the
+hashicorp community in which user [fprimex found a super useful
+workaround](https://github.com/hashicorp-community/tf-helper/issues/1#issuecomment-490656096).
+Apparently `awk` keeps track of the arguments it's called with in it's `ARGV`
+array. _SWEET!_ Now I think we have most of the pieces needed to make our first
+requirement work: [parsing of templates](https://github.com/rombrom/rombrom.com/blob/e91795ce39d297fed88353b37ccc54ead2af892c/scripts/build).
