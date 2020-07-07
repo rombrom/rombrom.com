@@ -211,4 +211,4 @@ hashicorp community in which user [fprimex found a super useful
 workaround](https://github.com/hashicorp-community/tf-helper/issues/1#issuecomment-490656096).
 Apparently `awk` keeps track of the arguments it's called with in it's `ARGV`
 array. _SWEET!_ Now I think we have most of the pieces needed to make our first
-requirement work: [parsing of templates](https://github.com/rombrom/rombrom.com/blob/e91795ce39d297fed88353b37ccc54ead2af892c/scripts/build).
+requirement work: [parsing of templates](https://github.com/rombrom/rombrom.com/blob/86f054019d710f8354a060be234c80edd88faef9/scripts/build).
