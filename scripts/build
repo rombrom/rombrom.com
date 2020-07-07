@@ -34,6 +34,10 @@ esc_re() {
   printf '%s' "$1" | sed "s/[]})\/.?^|$+*({[]/\\\&/g"
 }
 
+# escapes potential backreference in a string when used as
+# replacement in sed's s/ or awk's gsub()
+# @param string
+# @return string
 esc_ref() {
   printf '%s' "$1" | sed "s/[&]/\\\&/g"
 }
