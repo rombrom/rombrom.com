@@ -1,0 +1,510 @@
+144: shift
+134: [[ 0 -ne 0 ]]
+148: parse_files test/templates/include-glob.html
+121: local cwd=/Users/rommert/Code/romrbrom.com
+123: for path in '"$@"'
+124: local realpath=test/templates/include-glob.html
+126: [[ ! t = \/ ]]
+126: realpath=/Users/rommert/Code/romrbrom.com/test/templates/include-glob.html
+127: [[ ! -f /Users/rommert/Code/romrbrom.com/test/templates/include-glob.html ]]
+1129: dirname /Users/rommert/Code/romrbrom.com/test/templates/include-glob.html
+129: parse '<p>This include should display some partials in ./partials</p>
+(> ./partials/*-include.html)' /Users/rommert/Code/romrbrom.com/test/templates
+44: local 'output=<p>This include should display some partials in ./partials</p>
+(> ./partials/*-include.html)'
+45: local context=/Users/rommert/Code/romrbrom.com/test/templates
+47: [[ -d /Users/rommert/Code/romrbrom.com/test/templates ]]
+47: cd /Users/rommert/Code/romrbrom.com/test/templates
+449: parse_includes '<p>This include should display some partials in ./partials</p>
+(> ./partials/*-include.html)'
+660: local 'output=<p>This include should display some partials in ./partials</p>
+(> ./partials/*-include.html)'
+667: local includes
+7770: printf %s '<p>This include should display some partials in ./partials</p>
+(> ./partials/*-include.html)'
+7770: grep -oE '\(>[[:blank:]]*(.+[[:blank:]]*)\)'
+7770: sed -E 's/\(>[[:blank:]]*(.+[[:blank:]]*)\)/\1:&/'
+7770: uniq
+770: includes='./partials/*-include.html:(> ./partials/*-include.html)'
+773: [[ -z ./partials/*-include.html:(> ./partials/*-include.html) ]]
+882: read -r includeRecord
+883: local path
+883: path='./partials/*-include.html'
+884: local exp_re
+8884: esc_re '(> ./partials/*-include.html)'
+2228: printf %s '(> ./partials/*-include.html)'
+2228: sed 's/[]})\/.?^|$+*({[]/\\&/g'
+884: exp_re='\(> \.\/partials\/\*-include\.html\)'
+886: [[ ! ./partials/*-include.html =~ \./ ]]
+888: echo /Users/rommert/Code/romrbrom.com/test/templates
+889: local files
+8889: ls -t ./partials/nested-include.html ./partials/no-include.html ./partials/parent-include.html
+889: files='./partials/parent-include.html
+./partials/nested-include.html
+./partials/no-include.html'
+991: local content
+99991: cat ./partials/parent-include.html ./partials/nested-include.html ./partials/no-include.html
+9991: esc_ref '<p>This partial should include a parent partial.</p>
+(> ../partial.html)
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+3336: printf %s '<p>This partial should include a parent partial.</p>
+(> ../partial.html)
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+991: content='<p>This partial should include a parent partial.</p>
+(> ../partial.html)
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+11108: awk 'BEGIN {
+        content=ARGV[1]; delete ARGV[1];
+        output=ARGV[2]; delete ARGV[2];
+        gsub(/\(> \.\/partials\/\*-include\.html\)/, content, output);
+        print output
+      }' '<p>This partial should include a parent partial.</p>
+(> ../partial.html)
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>' '<p>This include should display some partials in ./partials</p>
+(> ./partials/*-include.html)'
+1103: output='<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+(> ../partial.html)
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+111106: dirname './partials/*-include.html'
+11106: parse '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+(> ../partial.html)
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>' ./partials
+4444: local 'output=<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+(> ../partial.html)
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+4445: local context=./partials
+4447: [[ -d ./partials ]]
+4447: cd ./partials
+44449: parse_includes '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+(> ../partial.html)
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+66660: local 'output=<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+(> ../partial.html)
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+66667: local includes
+777770: printf %s '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+(> ../partial.html)
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+777770: grep -oE '\(>[[:blank:]]*(.+[[:blank:]]*)\)'
+777770: sed -E 's/\(>[[:blank:]]*(.+[[:blank:]]*)\)/\1:&/'
+777770: uniq
+77770: includes='../partial.html:(> ../partial.html)
+./no-include.html:(> ./no-include.html)'
+77773: [[ -z ../partial.html:(> ../partial.html)
+./no-include.html:(> ./no-include.html) ]]
+88882: read -r includeRecord
+88883: local path
+88883: path=../partial.html
+88884: local exp_re
+888884: esc_re '(> ../partial.html)'
+222228: printf %s '(> ../partial.html)'
+222228: sed 's/[]})\/.?^|$+*({[]/\\&/g'
+88884: exp_re='\(> \.\.\/partial\.html\)'
+88886: [[ ! ../partial.html =~ \./ ]]
+88888: echo /Users/rommert/Code/romrbrom.com/test/templates/partials
+88889: local files
+888889: ls -t ../partial.html
+88889: files=../partial.html
+99991: local content
+9999991: cat ../partial.html
+999991: esc_ref '<p class="test">This is a partial.</p>'
+333336: printf %s '<p class="test">This is a partial.</p>'
+99991: content='<p class="test">This is a partial.</p>'
+1111108: awk 'BEGIN {
+        content=ARGV[1]; delete ARGV[1];
+        output=ARGV[2]; delete ARGV[2];
+        gsub(/\(> \.\.\/partial\.html\)/, content, output);
+        print output
+      }' '<p class="test">This is a partial.</p>' '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+(> ../partial.html)
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+111103: output='<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+11111106: dirname ../partial.html
+1111106: parse '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>' ..
+444444: local 'output=<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+444445: local context=..
+444447: [[ -d .. ]]
+444447: cd ..
+4444449: parse_includes '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+6666660: local 'output=<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+6666667: local includes
+77777770: printf %s '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+77777770: grep -oE '\(>[[:blank:]]*(.+[[:blank:]]*)\)'
+77777770: sed -E 's/\(>[[:blank:]]*(.+[[:blank:]]*)\)/\1:&/'
+77777770: uniq
+7777770: includes='./no-include.html:(> ./no-include.html)'
+7777773: [[ -z ./no-include.html:(> ./no-include.html) ]]
+8888882: read -r includeRecord
+8888883: local path
+8888883: path=./no-include.html
+8888884: local exp_re
+88888884: esc_re '(> ./no-include.html)'
+22222228: printf %s '(> ./no-include.html)'
+22222228: sed 's/[]})\/.?^|$+*({[]/\\&/g'
+8888884: exp_re='\(> \.\/no-include\.html\)'
+8888886: [[ ! ./no-include.html =~ \./ ]]
+8888888: echo /Users/rommert/Code/romrbrom.com/test/templates
+8888889: local files
+88888889: ls -t ./no-include.html
+ls: ./no-include.html: No such file or directory
+8888889: files=
+9999991: local content
+999999991: cat
+99999991: esc_ref ''
+33333336: printf %s ''
+9999991: content=
+111111108: awk 'BEGIN {
+        content=ARGV[1]; delete ARGV[1];
+        output=ARGV[2]; delete ARGV[2];
+        gsub(/\(> \.\/no-include\.html\)/, content, output);
+        print output
+      }' '' '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+(> ./no-include.html)
+<p>This is a partial inside a subdirectory.</p>'
+11111103: output='<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+1111111106: dirname ./no-include.html
+111111106: parse '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>' .
+44444444: local 'output=<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+44444445: local context=.
+44444447: [[ -d . ]]
+44444447: cd .
+444444449: parse_includes '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+666666660: local 'output=<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+666666667: local includes
+7777777770: printf %s '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+7777777770: grep -oE '\(>[[:blank:]]*(.+[[:blank:]]*)\)'
+7777777770: sed -E 's/\(>[[:blank:]]*(.+[[:blank:]]*)\)/\1:&/'
+7777777770: uniq
+777777770: includes=
+777777773: [[ -z '' ]]
+777777774: printf %s '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+777777775: return
+44444449: output='<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+55555551: printf '%s\n' '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+11111106: output='<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+8888882: read -r includeRecord
+11111112: printf '%s\n' '<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+444449: output='/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+555551: printf '%s\n' '/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+111106: output='/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+88882: read -r includeRecord
+88883: local path
+88883: path=./no-include.html
+88884: local exp_re
+888884: esc_re '(> ./no-include.html)'
+222228: printf %s '(> ./no-include.html)'
+222228: sed 's/[]})\/.?^|$+*({[]/\\&/g'
+88884: exp_re='\(> \.\/no-include\.html\)'
+88886: [[ ! ./no-include.html =~ \./ ]]
+88888: echo /Users/rommert/Code/romrbrom.com/test/templates/partials
+88889: local files
+888889: ls -t ./no-include.html
+88889: files=./no-include.html
+99991: local content
+9999991: cat ./no-include.html
+999991: esc_ref '<p>This is a partial inside a subdirectory.</p>'
+333336: printf %s '<p>This is a partial inside a subdirectory.</p>'
+99991: content='<p>This is a partial inside a subdirectory.</p>'
+1111108: awk 'BEGIN {
+        content=ARGV[1]; delete ARGV[1];
+        output=ARGV[2]; delete ARGV[2];
+        gsub(/\(> \.\/no-include\.html\)/, content, output);
+        print output
+      }' '<p>This is a partial inside a subdirectory.</p>' '/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+111103: output='/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+11111106: dirname ./no-include.html
+1111106: parse '/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>' .
+444444: local 'output=/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+444445: local context=.
+444447: [[ -d . ]]
+444447: cd .
+4444449: parse_includes '/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+6666660: local 'output=/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+6666667: local includes
+77777770: printf %s '/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+77777770: grep -oE '\(>[[:blank:]]*(.+[[:blank:]]*)\)'
+77777770: sed -E 's/\(>[[:blank:]]*(.+[[:blank:]]*)\)/\1:&/'
+77777770: uniq
+7777770: includes=
+7777773: [[ -z '' ]]
+7777774: printf %s '/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+7777775: return
+444449: output='/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+555551: printf '%s\n' '/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+111106: output='/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+88882: read -r includeRecord
+111112: printf '%s\n' '/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+4449: output='/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+5551: printf '%s\n' '/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+1106: output='/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+882: read -r includeRecord
+1112: printf '%s\n' '/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+49: output='/Users/rommert/Code/romrbrom.com/test/templates
+/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+51: printf '%s\n' '/Users/rommert/Code/romrbrom.com/test/templates
+/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>'
+/Users/rommert/Code/romrbrom.com/test/templates
+/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates/partials
+/Users/rommert/Code/romrbrom.com/test/templates
+<p>This include should display some partials in ./partials</p>
+<p>This partial should include a parent partial.</p>
+<p class="test">This is a partial.</p>
+<p>This partial should render a nested partial.</p>
+
+<p>This is a partial inside a subdirectory.</p>
