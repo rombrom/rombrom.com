@@ -4,6 +4,7 @@
   "description": "[![Netlify Status](https://api.netlify.com/api/v1/badges/4162f8cf-49d2-4f6c-9734-7073674b7b63/deploy-status)](https://app.netlify.com/sites/rombrom/deploys)",
   "main": "index.js",
   "scripts": {
+    "build": "eleventy --input src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/rombrom/romrbrom.com/issues"
   },
-  "homepage": "https://github.com/rombrom/romrbrom.com#readme"
+  "homepage": "https://github.com/rombrom/romrbrom.com#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1"
+  }
 }
