@@ -1,23 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Rombrom.com - Computer play time</title>
+---
+eleventyImport:
+  collections: ['post']
+layout: base
+title: Rombrom.com - Computer play time
+---
 
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <h1>HI! This is an internet. It is made by Rommert Zijlstra</h1>
+<header>
+  <h1>
+    rombrom
+    <i class="com"
+      >.com
+      <hr />
+      .eth</i
+    >
+  </h1>
+</header>
 
-    <p>
-      My previous place on the web hadn't been touched in well over 10 years.
-      Sure, I've tried to re-ignite the engine lots of times but perfectionism
-      always got the best of me. Now I just wanted to start and take anyone
-      interested along for the ride.
-    </p>
+<section>
+  <p>
+    A dad who's making and breaking the web. Est. 1987. I do freelance web
+    things as <a href="https://noop.digital">noop.digital</a>. Here you'll
+    probably find fragmented notes. I don't write often because I love building
+    with others more.
+  </p>
 
-    <p>Take care,</p>
+  <p>
+    Currently into building web3 things with
+    <a href="https://021.gg">021</a>. I do some things on
+    <a href="https://github.com/rombrom">GitHub</a>.
+    <a href="https://x.com/rombromz">I X on X sometimes</a> (<i>xoxo</i> 😘).
+    I've been making web things for close to two decades. It's fun! Sometimes
+    it's <em class="tooltip" title="Read: 'Losing'">fun</em>.
+  </p>
+</section>
 
-    <p>Rommert</p>
-  </body>
-</html>
+<h2>Notes</h2>
+
+<ol reversed>
+  {%- for post in collections.post -%}
+  <li>
+    <article>
+      <a href="{{ post.url }}">
+        <h3>{{ post.data.title }}</h3>
+      </a>
+      <time>{{ post.date | prettyDate }}</time>
+    </article>
+  </li>
+  {%- endfor -%}
+</ol>
