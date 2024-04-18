@@ -152,7 +152,7 @@ ol > li::before {
 }
 
 ol > li > article > a {
-  color: var(--bg);
+  color: var(--fg);
   text-decoration: none;
 }
 
