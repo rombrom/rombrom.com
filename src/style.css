@@ -9,10 +9,14 @@
 }
 
 html {
-  background-color: cornsilk;
-  color: darkslategray;
+  --fg: darkslategray;
+  --bg: cornsilk;
+
+  background-color: var(--bg);
+  color: var(--fg);
   font: clamp(1rem, 3vw, 1.5rem) / 1.5 monospace;
   font-family: Georgia, 'Times New Roman', Times, serif;
+  line-height: 1.618;
 }
 
 body {
@@ -49,8 +53,8 @@ h2 {
   color: coral;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-style: italic;
-  font-size: clamp(3rem, 13vw, 5rem);
-  margin: 25vh 0 calc(1em * 1.5);
+  font-size: clamp(2rem, 10vw, 5rem);
+  margin: 1.5em 0;
   line-height: 1;
 }
 
@@ -99,7 +103,8 @@ blockquote {
 }
 
 code {
-  background-color: slategray;
+  background-color: var(--fg);
+  color: var(--bg);
   padding: 0.125rem 0.25rem;
   font-size: 0.875em;
 }
@@ -147,13 +152,13 @@ ol > li::before {
 }
 
 ol > li > article > a {
-  color: cornsilk;
+  color: var(--bg);
   text-decoration: none;
 }
 
 nav {
   position: sticky;
-  background: darkslategray;
+  background: var(--bg);
   top: -1px;
   z-index: 1;
   text-align: center;
@@ -205,9 +210,9 @@ footer {
   opacity: 1;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    background-color: darkslategray;
-    color: cornsilk;
-  }
-}
+/* @media (prefers-color-scheme: dark) { */
+/*   html { */
+/*     --bg: darkslategray; */
+/*     --fg: cornsilk; */
+/*   } */
+/* } */
