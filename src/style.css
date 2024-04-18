@@ -210,9 +210,9 @@ footer {
   opacity: 1;
 }
 
-/* @media (prefers-color-scheme: dark) { */
-/*   html { */
-/*     --bg: darkslategray; */
-/*     --fg: cornsilk; */
-/*   } */
-/* } */
+@media (prefers-color-scheme: dark) {
+  html {
+    --bg: darkslategray;
+    --fg: cornsilk;
+  }
+}
