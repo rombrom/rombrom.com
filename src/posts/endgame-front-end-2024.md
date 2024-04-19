@@ -1,7 +1,7 @@
 ---
 tags: post
 layout: post
-title: A Tour of an NFT Rentals Marketplace Front End at Cruising Altitude
+title: A Tour of an NFT Rentals Front End at Cruising Altitude
 excerpt: |
   We've released the 021 Endgame rentals marketplace. In this article we take
   a high-level tour of some of the core libraries used in building it.
