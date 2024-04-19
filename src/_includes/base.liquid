@@ -10,6 +10,7 @@
   {% endif %}
 {%- endcapture -%}
 
+{%- assign baseHref = "https://www.rombrom.com" -%}
 {%- assign pageTitle = _pageTitle | strip | replace: "\n", " " -%}
 {%- assign pageDescription = _pageDescription | strip | replace: "\n", " " -%}
 
@@ -28,10 +29,10 @@
     <meta property="og:image" content="/preview.png" />
     <meta property="og:title" content="{{ pageTitle }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.rombrom.com{{ page.url }}" />
+    <meta property="og:url" content="{{ baseHref }}{{ page.url }}" />
     <meta name="twitter:title" content="{{ pageTitle }}" />
     <meta name="twitter:description" content="{{ pageDescription }}" />
-    <meta name="twitter:image" content="/preview.png" />
+    <meta name="twitter:image" content="{{ baseHref }}/preview.png" />
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
