@@ -231,8 +231,7 @@ abbr,
   width: var(--size);
 }
 
-.post-list a {
-  color: var(--fg);
+.post-list a:link {
   text-decoration: none;
 }
 
