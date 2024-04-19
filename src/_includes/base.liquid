@@ -43,6 +43,19 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#f55c45">
     <meta name="msapplication-TileColor" content="#fff1d6">
     <meta name="theme-color" content="#fff1d6">
+
+    <script>
+      const { matches: usesDarkTheme } =
+        window.matchMedia('(prefers-color-scheme:dark)');
+
+      if (usesDarkTheme) {
+        Array.from(document.querySelectorAll(
+          'meta[name="msapplication-TileColor"], meta[name="theme-color"]'
+        )).forEach((node) => {
+          node.content = '#181b1f';
+        });
+      }
+    </script>
   </head>
 
   <body class="{{ layout }}">
