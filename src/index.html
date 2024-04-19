@@ -38,15 +38,11 @@ layout: base
 
 <h2>Notes</h2>
 
-<ol class="post-list">
-  {%- for post in collections.post reversed -%}
-  <li data-index="{{ forloop.rindex }}">
-    <article>
-      <a href="{{ post.url }}">
-        <h3>{{ post.data.title }}</h3>
-      </a>
-      <time>{{ post.date | prettyDate }}</time>
-    </article>
-  </li>
-  {%- endfor -%}
-</ol>
+{%- for post in collections.post reversed -%}
+<article class="article-preview">
+  <a href="{{ post.url }}">
+    <h3>{{ post.data.title }}</h3>
+  </a>
+  <time>{{ post.date | prettyDate }}</time>
+</article>
+{%- endfor -%}
