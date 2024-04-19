@@ -37,7 +37,7 @@ We leverage WalletConnect’s Web3 Modal for wallet connections. While Wagmi doe
 
 For Endgame protocol interfacing we wrote a small library wrapping parts of our back end interface, Wagmi, and—since our protocol leverages Seaport—SeaportJS with Tanstack Query. The library exposes a set of React hooks which provide us data about chain configuration, permissions, rental status, and relevant rental and safe account actions. In honesty, SeaportJS we might eject from at some later point, as it provides a lot of tooling to interface with the Seaport protocol, whereas we just use a small subset. For velocity's sake though, having SeaportJS check and ask for approvals before initiating a rental transaction is pretty nice to have.
 
-We found Wagmi’s MockConnector one of its biggest boons. It allows us to, well, mock a connected wallet. We have written a small harness around the MockConnector, allowing us to easily connect a test wallet for our end-to-end tests, or to mimic/impersonate any wallet for manual testing and debugging purposes. In the future we might write a more in-depth article on our approach here.
+We found Wagmi’s `MockConnector` one of its biggest boons. It allows us to, well, mock a connected wallet. We have written a small harness around the `MockConnector`, allowing us to easily connect a test wallet for our end-to-end tests, or to mimic/impersonate any wallet for manual testing and debugging purposes. In the future we might write a more in-depth article on our approach here.
 
 ## Components and UI
 
