@@ -15,7 +15,7 @@ We use [Remix](https://remix.run/) as our front end framework. As it’s powered
 
 For testing our application we leverage [Storybook’s Test Runner](https://storybook.js.org/docs/writing-tests/test-runner) as a component testing framework and [Playwright](https://playwright.dev/) for the heavier end-to-end testing. Both are fantastic tools to keep core functionality in check.
 
-Everything is written in [TypeScript](https://www.typescriptlang.org/). Most of these choices were locked-in from the onset.
+Everything is written in [TypeScript](https://www.typescriptlang.org/). Most of these choices were locked in from the onset.
 
 Now, if there’s any guiding principle in our development team, it would be: “be pragmatic”. This captures a slew of software development principles into one overarching creed. Think: <abbr title="You Aren't Gonna Need It">YAGNI</abbr>, <abbr title="Keep It Simple, Stupid">KISS</abbr>, “premature optimization is the root of all evil”, principle of least power, and probably some others. The thing with code, when you’ve worked with it long enough, is that at some point you discover the code itself has a voice. Code can’t be simply reduced to expressions, variables and operations cast from the void of the programmer’s mind. This stance will deafen you to this voice. Code whispers when you find yourself repeating things. Code speaks when you struggle to find elegance. Code shouts when you’re trying to bend an implementation to its breaking point.
 
