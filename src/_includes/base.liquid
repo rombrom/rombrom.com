@@ -1,0 +1,38 @@
+{%- capture pageTitle -%}
+  {% if title %}{{ title }} - {% endif %}
+  Rombrom.com: Computer play time
+{%- endcapture -%}
+
+{%- capture pageDescription -%}
+  {% if excerpt %}
+    {{ excerpt }}
+  {% else %}
+    Personal website of Rommert Zijlstra. I do web things. A lot.
+  {% endif %}
+{%- endcapture -%}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{{ pageTitle | strip }}</title>
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <meta name="description" content="{{ pageDescription | strip | replace: "\n", " " }}" />
+    <meta property="og:description" content="{{ pageDescription | strip | replace: "\n", " " }}" />
+    <meta property="og:title" content="{{ pageTitle | strip }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.rombrom.com{{ page.url }}" />
+    <meta name="twitter:title" content="{{ pageTitle | strip }}" />
+    <meta name="twitter:description" content="{{ pageDescription | strip | replace: "\n", " " }}" />
+  </head>
+
+  <body class="{{ layout }}">
+    {{ content }}
+
+    <footer>(C) Rommert Zijlstra</footer>
+  </body>
+</html>
