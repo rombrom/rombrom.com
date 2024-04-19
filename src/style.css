@@ -167,6 +167,7 @@ ol > li::before {
   font-size: calc(var(--size) / 2);
   font-style: italic;
   height: var(--size);
+  line-height: calc(var(--size) - 0.25rem);
   justify-content: center;
   text-align: center;
   width: var(--size);
