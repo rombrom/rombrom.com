@@ -1,7 +1,7 @@
 :root {
   box-sizing: border-box;
 }
-
+chore: remove ")"
 *,
 *::before,
 *::after {
@@ -207,12 +207,13 @@ footer {
   text-align: center;
 }
 
+abbr,
 .tooltip {
   text-decoration: underline dotted;
   position: relative;
 }
 
-.tooltip::after {
+:where(abbr, .tooltip)::after {
   background: var(--color-black);
   color: var(--color-light-grey);
   bottom: 100%;
@@ -228,7 +229,7 @@ footer {
   white-space: nowrap;
 }
 
-.tooltip:hover::after {
+:where(abbr, .tooltip):hover::after {
   opacity: 1;
 }
 
