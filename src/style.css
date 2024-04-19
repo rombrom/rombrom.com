@@ -170,13 +170,12 @@ footer {
   text-align: center;
 }
 
-abbr,
-.tooltip {
+abbr {
   text-decoration: underline dotted;
   position: relative;
 }
 
-:where(abbr, .tooltip)::after {
+abbr::after {
   background: var(--color-black);
   color: var(--color-light-grey);
   bottom: 100%;
@@ -192,7 +191,7 @@ abbr,
   white-space: nowrap;
 }
 
-:where(abbr, .tooltip):hover::after {
+abbr:hover::after {
   opacity: 1;
 }
 
