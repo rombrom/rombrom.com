@@ -2,7 +2,6 @@
 eleventyImport:
   collections: ['post']
 layout: base
-title: Rombrom.com - Computer play time
 ---
 
 <header>
@@ -24,10 +23,13 @@ title: Rombrom.com - Computer play time
   </p>
 
   <p>
-    I do freelance web things as
-    <a href="https://noop.digital">noop.digital</a>. Currently into building
-    web3 things with <a href="https://021.gg">021</a>. I do some things on
-    <a href="https://github.com/rombrom">GitHub</a>.
+    Currently into building web3 things with
+    <a href="https://021.gg">021.gg</a> (check out
+    <a href="https://endgame.021.gg">Endgame rentals marketplace</a>).
+  </p>
+
+  <p>
+    I do some things on <a href="https://github.com/rombrom">GitHub</a>.
     <a href="https://x.com/rombromz">I X on X sometimes</a> (<i>xoxo</i> 😘).
     I've been making web things for close to two decades. It's fun! Sometimes
     it's <em class="tooltip" title="Read: 'Losing'">fun</em>.
@@ -36,9 +38,9 @@ title: Rombrom.com - Computer play time
 
 <h2>Notes</h2>
 
-<ol reversed>
-  {%- for post in collections.post -%}
-  <li>
+<ol>
+  {%- for post in collections.post reversed -%}
+  <li data-index="{{ forloop.rindex }}">
     <article>
       <a href="{{ post.url }}">
         <h3>{{ post.data.title }}</h3>
