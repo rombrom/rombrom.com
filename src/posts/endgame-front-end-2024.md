@@ -1,5 +1,4 @@
 ---
-date: 2024-04-18T18:19:00
 tags: post
 layout: post
 title: A Tour of an NFT Rentals Marketplace Front End at Cruising Altitude
