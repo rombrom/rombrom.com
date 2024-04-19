@@ -7,7 +7,10 @@ layout: base
 </nav>
 
 <article>
-  <h1>{{ title }}</h1>
+  <header>
+    <h1>{{ title }}</h1>
+    <time>{{ page.date | prettyDate }}</time>
+  </header>
   {{ content }}
 
   <p><a href="/">‹ Back</a></p>
