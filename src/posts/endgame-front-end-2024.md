@@ -15,7 +15,9 @@ For testing our application we leverage [Storybook’s Test Runner](https://stor
 
 Everything is written in TypeScript. Most of these choices were locked-in from the onset.
 
-Now, if there’s any guiding principle in our development team, it would be: “be pragmatic”. This captures a slew of software development principles into one overarching creed. Think: YAGNI, KISS, “premature optimization is the root of all evil”, principle of least power, and probably some others. The thing with code, when you’ve worked with it long enough, is that at some point you discover the code itself has a voice. Code can’t be simply reduced to expressions, variables and operations cast from the void of the programmer’s mind. This stance will deafen you to this voice. Code whispers when you find yourself repeating things. Code speaks when you struggle to find elegance. Code shouts when you’re trying to bend an implementation to its breaking point. Pragmatism appoints code itself a powerful advisor.
+Now, if there’s any guiding principle in our development team, it would be: “be pragmatic”. This captures a slew of software development principles into one overarching creed. Think: YAGNI, KISS, “premature optimization is the root of all evil”, principle of least power, and probably some others. The thing with code, when you’ve worked with it long enough, is that at some point you discover the code itself has a voice. Code can’t be simply reduced to expressions, variables and operations cast from the void of the programmer’s mind. This stance will deafen you to this voice. Code whispers when you find yourself repeating things. Code speaks when you struggle to find elegance. Code shouts when you’re trying to bend an implementation to its breaking point.
+
+Pragmatism appoints code itself a powerful advisor.
 
 ## Back End
 
