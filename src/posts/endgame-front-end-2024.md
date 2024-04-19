@@ -15,7 +15,7 @@ We use [Remix](https://remix.run/) as our front end framework. As it’s powered
 
 For testing our application we leverage [Storybook’s Test Runner](https://storybook.js.org/docs/writing-tests/test-runner) as a component testing framework and [Playwright](https://playwright.dev/) for the heavier end-to-end testing. Both are fantastic tools to keep core functionality in check.
 
-Everything is written in TypeScript. Most of these choices were locked-in from the onset.
+Everything is written in [TypeScript](https://www.typescriptlang.org/). Most of these choices were locked-in from the onset.
 
 Now, if there’s any guiding principle in our development team, it would be: “be pragmatic”. This captures a slew of software development principles into one overarching creed. Think: YAGNI, KISS, “premature optimization is the root of all evil”, principle of least power, and probably some others. The thing with code, when you’ve worked with it long enough, is that at some point you discover the code itself has a voice. Code can’t be simply reduced to expressions, variables and operations cast from the void of the programmer’s mind. This stance will deafen you to this voice. Code whispers when you find yourself repeating things. Code speaks when you struggle to find elegance. Code shouts when you’re trying to bend an implementation to its breaking point.
 
@@ -23,7 +23,7 @@ Pragmatism appoints code itself a powerful advisor.
 
 ## Back End
 
-Our back end exposes a GraphQL API to fetch and mutate data. As such we had a rich amount of choices for handling back end I/O but opted for simplicity first. We leverage GraphQL Request in tandem with Tanstack Query.
+Our back end exposes a GraphQL API to fetch and mutate data. As such we had a rich amount of choices for handling back end interfacing but opted for simplicity first. We leverage GraphQL Request in tandem with Tanstack Query.
 
 Tanstack Query especially exposes a delightful API to handle a wide variety of data fetching (while not being limited to only data fetching) scenarios. Things like TTL, invalidation, “infinite” (e.g. paginated) queries, loading and error states, mutations, etc. are all made available in a relatively light-weight package. GraphQL Request, in tandem with GraphQL Codegen, allows us to easily and flexibly define the data we need for certain views. We try to colocate GraphQL queries where it's sensible and leverage fragments to reduce duplication. GraphQL Codegen provides tooling like `FragmentType` and `useFragment()` to handle actual types and properties returned by queries—as opposed to using GraphQL schema types as props directly. For more info, read up on ["fragment masking"](https://the-guild.dev/blog/unleash-the-power-of-fragments-with-graphql-codegen).
 
@@ -35,7 +35,7 @@ A few months after Wagmi was released we integrated it into our v2 front end to 
 
 We leverage WalletConnect’s Web3 Modal for wallet connections. While Wagmi does provide the option to handle the injected connector alongside, we figured presenting a unified, familiar interface regardless of connector was easiest to maintain while providing a consistent UX.
 
-For Endgame protocol I/O we wrote a small library wrapping parts of our back end I/O, Wagmi, and—since our protocol leverages Seaport—SeaportJS with Tanstack Query. The library exposes a set of React hooks which provide us data about chain configuration, permissions, rental status, and relevant rental and safe account actions. In honesty, SeaportJS we might eject from at some later point, as it provides a lot of tooling to interface with the Seaport protocol, whereas we just use a small subset. For velocity's sake though, having SeaportJS check and ask for approvals before initiating a rental transaction is pretty nice to have.
+For Endgame protocol interfacing we wrote a small library wrapping parts of our back end interface, Wagmi, and—since our protocol leverages Seaport—SeaportJS with Tanstack Query. The library exposes a set of React hooks which provide us data about chain configuration, permissions, rental status, and relevant rental and safe account actions. In honesty, SeaportJS we might eject from at some later point, as it provides a lot of tooling to interface with the Seaport protocol, whereas we just use a small subset. For velocity's sake though, having SeaportJS check and ask for approvals before initiating a rental transaction is pretty nice to have.
 
 We found Wagmi’s MockConnector one of its biggest boons. It allows us to, well, mock a connected wallet. We have written a small harness around the MockConnector, allowing us to easily connect a test wallet for our end-to-end tests, or to mimic/impersonate any wallet for manual testing and debugging purposes. In the future we might write a more in-depth article on our approach here.
 
