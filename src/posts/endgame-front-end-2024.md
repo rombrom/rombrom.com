@@ -2,6 +2,9 @@
 tags: post
 layout: post
 title: A Tour of an NFT Rentals Marketplace Front End at Cruising Altitude
+excerpt: |
+  We've released the 021 Endgame rentals marketplace. In this article we take
+  a high-level tour of some of the core libraries used in building it.
 ---
 
 Gm all! Now that we’ve released our [021 Endgame](https://endgame.021.gg/) rentals protocol into the wild we figured it was high time to get some word out concerning some of the choices and trade-offs we made while building it. This article will focus in on some of these choices and trade-offs we made for our front end tech stack. I’ll get right to the juice.
