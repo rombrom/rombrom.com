@@ -66,3 +66,5 @@ Remix offered us vastly more transparency and control over its layers.
 ## Endgame
 
 We’re very excited to have launched Endgame and we’re grateful we can start to share our journey with everyone. It has taught us a lot. We hope to have given you an interesting cursory look at how we architected our front end. Now, each component in our architecture could merit its own article but we wanted to provide a comprehensive overview first. Stay tuned for some more in-depth content! Oh and be sure to [check out Endgame](https://endgame.021.gg). It's a labor of love.
+
+**Note:** [This post is co-published](https://paragraph.xyz/@021/a-tour-of-an-nft-rentals-front-end-at-cruising-altitude) on our [021's Paragraph.xyz](https://paragraph.xyz/@021).
