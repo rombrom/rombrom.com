@@ -13,7 +13,7 @@ I think I understand the perceived importance of structuring upfront. As humans 
 
 Structuring a project upfront is a fantastically useless navel-gazing distraction. It distracts you from the actual work with its feigned importance. It's a very inconspicuous form premature optimization and, quite frankly, busywork. What's more, structuring upfront runs directly counter to coding's actual craft and distances you from the material and landscape. The map is not the territory.
 
-Just get started. Refactor early. Refactor often.
+Just get started. Do the work. Refactor early. Refactor often.
 
 ## Three-Tiered Onions
 
@@ -225,20 +225,20 @@ Right.
 
 The example we worked through is a simple one. Still, it informs us about layers. The way Tanstack Query integrates naturally separates data fetching from presentation and allows you separate prefetching into a separate layer as well. I guess you could add an extra abstraction which wraps setting up and dehydrating a client, but trust me when I say the ROI isn't great. You're not swapping engines every day.
 
-The layers in the example aren't that clearly demarcated as there's some overlap in code location. The index route, for example, contains code concerning the UI layer and the prefetching layer. However, when this application grows you could very well imagine UI components being split off into `~/components`. At some point it might make sense to create a `~/loaders` module which houses recurring loader patterns. `getData()` could grow into a slew of modules housed in `~/api`. Who knows.
+The layers in the example aren't that clearly demarcated as there's some overlap in code location. The index route, for example, contains code concerning the UI layer and the prefetching layer. Layers aren't necessarily related to code location, folders and files. It's got more to do with what responsibility and/or domain the code envelops.
 
-Layers aren't necessarily related to code location, folders and files. Moving the UI code into a separate component is trivial. So is moving or abstracting loader (pre)fetching. It's got more to do with what responsibility and/or domain the code envelops.
+The beauty of code is that it's easily rearranged. Moving the UI code into a separate component is trivial. So is moving or abstracting loader (pre)fetching. When our example application grows you could very well imagine UI components being split off into `~/components`. At some point it might make sense to create a `~/loaders` module which houses recurring loader patterns. `getData()` could grow into a slew of modules housed in `~/api`. Who knows.
 
-The key thing here recognizing these layers. And understanding—nay, grokking—that moving, abstracting, and refactoring code are inexpensive operations. Start inline and work your way outwards. The code will tell you when it needs changing.
+The key thing here is learning to recognizing these layers. And understanding—nay, grokking—that moving, abstracting, and refactoring code are inexpensive operations. Start inline and work your way outwards. The code will tell you when it needs changing.
 
 ## A digression on botany
+
+Andy Hunt and David Thomas, authors of "The Pragmatic Programmer," quite aptly captured the meandering aspects of the craft in their [garden metaphor](https://www.artima.com/articles/programming-is-gardening-not-engineering). They recognized the paradoxical sentiments around programming. One the one hand the discourse touts coding an engineering profession: plan, execute, deliver. All according to spec. On the other hand, the act of coding itself often yields new discoveries orthogonal to the initial plan.
+
+> The garden doesn't quite come up the way you drew the picture. This plant gets a lot bigger than you thought it would. You've got to prune it. You've got to split it. You've got to move it around the garden. This big plant in the back died. You've got to dig it up and throw it into the compost pile.{% footnote %}See [Programming is Gardening, not Engineering: A Conversation with Andy Hunt and Dave Thomas, Part VII](https://www.artima.com/articles/programming-is-gardening-not-engineering). Quite some concepts from The Pragmatic Programmer make the rounds here.{% endfootnote %}
 
 When we started building Endgame we didn't start with any specific structure in mind. The first commit is literally the result from `npx create-next-app@latest` and we cruised on this structure for our initial scaffolding. We just wrote a lot of things inline. When we added WalletConnect support about 12 commits in, the `@/components` folder was added. It's a central place for UI components. Initially we had everything related to our WalletConnect integration housed in `@/components/wallet`. Much later we had split this up into `@/wallet` and `@/components/wallet`. The former being responsible for configuration and generic initialization, the latter specifically catered to UI. When we worked on getting GraphQL interfacing set up, we added `@/graphql`, housing code generation artifacts from GraphQL Codegen, our GraphQL client initialization and some utilities. We shoehorned our API interfacing layer into this module which we later extracted into `@/services/api`. We had a `@/config` folder which later turned into a simpler `@/config.ts` file.{% footnote %}We're leveraging TypeScript's [`paths`](https://www.typescriptlang.org/tsconfig/#paths) option as a poor-man's monorepo: `@/* › src/*`, `~/* › app/*`. Aside from freeing us from walking up paths, it's more subtle effect is that you tend to folders in `src/*` and `app/*` as proper, separate modules.{% endfootnote %}
 
 Anyway. What I'm trying to get at is that we just started doing the work. It didn't make sense worrying about structure before we'd have a solid grasp of how the thing we were building could be best structured. We did, however, have a good sense on how to layer things.
-
-Andy Hunt and David Thomas, authors of "The Pragmatic Programmer," quite aptly captured this aspect of the craft in their [garden metaphor](https://www.artima.com/articles/programming-is-gardening-not-engineering). They recognized the paradoxical sentiments around programming. One the one hand the discourse touts coding an engineering profession: plan, execute, deliver. All according to spec. On the other hand, the act of coding itself often yields new discoveries orthogonal to the initial plan.
-
-> The garden doesn't quite come up the way you drew the picture. This plant gets a lot bigger than you thought it would. You've got to prune it. You've got to split it. You've got to move it around the garden. This big plant in the back died. You've got to dig it up and throw it into the compost pile.{% footnote %}See [Programming is Gardening, not Engineering: A Conversation with Andy Hunt and Dave Thomas, Part VII](https://www.artima.com/articles/programming-is-gardening-not-engineering). Quite some concepts from The Pragmatic Programmer make the rounds here.{% endfootnote %}
 
 Coding is just as much a process of discovering the codified as it is codifying the discovered. One of the keys to becoming better is trying to make this feedback loop as tight as possible. Because many iterations through this loop will offset the practice more and more to codifying the discovered.
