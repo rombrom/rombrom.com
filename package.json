@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "engines": {
-    "node": "18",
-    "npm": "9"
+    "node": "20",
+    "npm": "10"
   },
   "name": "romrbrom.com",
   "version": "0.0.1",
@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/rombrom/romrbrom.com#readme",
   "dependencies": {
-    "@11ty/eleventy": "^2.0.1"
+    "@11ty/eleventy": "^2.0.1",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^8.6.7"
   }
 }
