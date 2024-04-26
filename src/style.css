@@ -57,7 +57,7 @@ h6 {
 }
 
 :where(p, pre, ol, ul) {
-  margin-block: 1.5em;
+  margin-block: 1.618em;
 }
 
 :where(ol, ul) :where(ol, ul) {
@@ -67,7 +67,7 @@ h6 {
 h1 {
   display: flex;
   align-items: center;
-  font-size: 2rem;
+  font-size: 2.618rem;
   margin-block-start: 0;
   margin-block-end: 1.5em;
 }
@@ -82,14 +82,14 @@ h2 {
   color: var(--color-red);
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-style: italic;
-  font-size: clamp(2rem, 10vw, 5rem);
+  font-size: clamp(2rem, 10vw, 4.235rem);
   margin: 1.5em 0;
   line-height: 1;
 }
 
 h3 {
-  font-size: 2rem;
-  margin: 0 0 1em;
+  font-size: 1.618rem;
+  margin: 1em 0;
 }
 
 h1,
