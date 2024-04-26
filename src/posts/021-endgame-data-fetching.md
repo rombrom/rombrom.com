@@ -52,7 +52,7 @@ npm run dev
 
 Lets do some scaffolding first. We need some fake data to fetch. We'll simulate this as well as possible network latency and error cases.
 
-```typescript
+```ts
 // File: app/getData.ts
 
 export async function getData() {
@@ -65,7 +65,7 @@ export async function getData() {
 
 We also need to add a `<QueryClientProvider />` to our root layout.
 
-```typescriptreact
+```tsx
 // File: app/root.tsx
 
 import {
@@ -73,7 +73,7 @@ import {
   QueryClientProvider
 } from '@tanstack/react-query';
 import { useState } from 'react';
-...
+// ...
 export function Layout({ children }: { children: React.ReactNode }) {
   // The reason we want to initialze `QueryClient` in a state
   // is because we need the client to be unique for each user.
@@ -85,26 +85,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
       },
     })
   );
-  ...
+  // ...
 
   return (
-    ...
+    // ...
         <QueryClientProvider client={queryClient}>
           {children}
         </QueryClientProvider>
-    ...
+    // ...
   );
 }
+// ...
 ```
 
 Lastly, lets implement this in our `app/routes/_index.tsx` route.
 
-```typescriptreact
+```tsx
 // File: app/routes/_index.tsx
-...
+// ...
 import { useQuery } from '@tanstack/react-query';
 import { getData } from '~/getData';
-...
+// ...
 export default function Index() {
   const { data, error, isLoading } = useQuery({
     queryFn: () => getData(),
@@ -130,7 +131,7 @@ Big whoop. This is Tanstack Query 101. Lets get that SSR going. Tanstack Query o
 
 When you visit a route on Remix, it will fetch data from all loaders in the route cascade. If you pair this with Remix's powerful [`useMatches`](https://remix.run/docs/en/main/hooks/use-matches){% footnote %}Not related to fire starting equipment.{% endfootnote %} hook, you can combine dehydrated data from all matching loaders without having to resort to nested `HydrationBoundary` components. The only requirement is introducing a convention on how (prefetched) loader data is returned. So lets agree here and now that any loader returning JSON which includes a `dehydratedState` property has state we want to accumulate.
 
-```typescript
+```ts
 // File: app/useMatches.ts
 
 import { useMatches } from '@remix-run/react';
@@ -156,7 +157,7 @@ export function useDehydratedState() {
 
 Now lets add the hydration setup to our root layout. Also note the addition of `staleTime` to our client side `QueryClient`. Our dehydrated client already fetched and without adding at least a bit of `staleTime`, our queries would be executed again on the client.
 
-```typescriptreact
+```tsx
 // File: app/root.tsx
 
 import {
@@ -166,7 +167,7 @@ import {
 } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useDehydratedState } from './useDehydratedState';
-...
+// ...
 export function Layout({ children }: { children: React.ReactNode }) {
   // The reason we want to initialze `QueryClient` in a state
   // is because we need the client to be unique for each user.
@@ -180,23 +181,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
     })
   );
   const dehydratedState = useDehydratedState();
-  ...
+  // ...
 
   return (
-    ...
+    // ...
         <HydrationBoundary state={dehydratedState}>
           <QueryClientProvider client={queryClient}>
             {children}
           </QueryClientProvider>
         </HydrationBoundary>
-    ...
+    // ...
   );
 }
+// ...
 ```
 
 And hook up a loader, making use of `dehydrate()`, to the index route.
 
-```typescriptreact
+```tsx
 // File: app/routes/_index.tsx
 import { json, type LoaderFunction, type MetaFunction } from '@remix-run/node';
 import { QueryClient, dehydrate, useQuery } from '@tanstack/react-query';
@@ -210,7 +212,7 @@ export const loader: LoaderFunction = async () => {
   });
   return json({ dehydratedState: dehydrate(queryClient) });
 };
-...
+// ...
 ```
 
 And fin.

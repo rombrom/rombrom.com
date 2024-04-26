@@ -4,6 +4,7 @@
     "node": "20",
     "npm": "10"
   },
+  "type": "module",
   "name": "romrbrom.com",
   "version": "0.0.1",
   "description": "[![Netlify Status](https://api.netlify.com/api/v1/badges/4162f8cf-49d2-4f6c-9734-7073674b7b63/deploy-status)](https://app.netlify.com/sites/rombrom/deploys)",
@@ -28,7 +29,9 @@
   },
   "homepage": "https://github.com/rombrom/romrbrom.com#readme",
   "dependencies": {
-    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy": "^3.0.0-alpha.9",
+    "@shikijs/markdown-it": "^1.3.0",
+    "@shikijs/transformers": "^1.3.0",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^8.6.7"
   }

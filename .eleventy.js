@@ -1,14 +1,20 @@
-const markdownIt = require('markdown-it');
+import markdownIt from 'markdown-it';
+import markdownItAnchor from 'markdown-it-anchor';
+import Shiki from '@shikijs/markdown-it';
 
 const markdown = markdownIt({
   html: true,
   linkify: true,
   typographer: true,
-}).use(require('markdown-it-anchor'));
+})
+  .use(markdownItAnchor)
+  .use(
+    await Shiki({ theme: 'houston' })
+  );
 
 const footnoteCache = new Map();
 
-module.exports = function configure(config) {
+export default function configure(config) {
   config.setLibrary('md', markdown);
 
   config.addGlobalData('layout', 'base');
@@ -32,4 +38,4 @@ module.exports = function configure(config) {
   });
 
   config.addFilter('json', (input) => JSON.stringify(input));
-};
+}
