@@ -13,7 +13,7 @@ I think I understand the perceived importance of structuring upfront. As humans 
 
 Structuring a project upfront is a fantastically useless navel-gazing distraction. It distracts you from the actual work with its feigned importance. It's a very inconspicuous form premature optimization and, quite frankly, busywork. What's more, structuring upfront runs directly counter to coding's actual craft and distances you from the material and landscape. The map is not the territory.
 
-Just get started. Do the work. Refactor early. Refactor often.
+Just get started. Do the work.
 
 ## Three-Tiered Onions
 
@@ -242,3 +242,5 @@ When we started building Endgame we didn't start with any specific structure in 
 Anyway. What I'm trying to get at is that we just started doing the work. It didn't make sense worrying about structure before we'd have a solid grasp of how the thing we were building could be best structured. We did, however, have a good sense on how to layer things.
 
 Coding is just as much a process of discovering the codified as it is codifying the discovered. One of the keys to becoming better is trying to make this feedback loop as tight as possible. Because many iterations through this loop will offset the practice more and more to codifying the discovered.
+
+Just get started. Do the work.
