@@ -39,6 +39,8 @@ If there's anything to take away from this section, it's that having a clear ide
 
 So far I've been all talk. It's high time for some actual code. Lets implement the way we fetch data with Tanstack Query.
 
+**Note:** there is a [demo repository](https://github.com/rombrom/remix-tanstack-query-hydration-demo) you can check out which contains all code below.
+
 ```sh
 # Create a Remix project, install Tanstack Query
 # and run dev server
