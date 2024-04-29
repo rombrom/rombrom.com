@@ -26,7 +26,7 @@ Let me cycle back to how [we swapped the engine at 2/3rd of the project](/posts/
 Roughly speaking we discern the following:
 
 1. Service layer, consisting of configuration, API interfacing, chain & wallet interfacing, and rental protocol interfacing.
-2. User Interface and Browser/React utilities
+2. User Interface and Browser/React utilities.
 3. Engine, providing SSR and route endpoints.
 
 Now, these layers do not necessarily correlate with our module structure. Generally speaking though, each layer can consume any preceding layer. Notice how the engine is an outer layer. Our core user interface components are separate from it, as is our core logic and service interfacing. The engine mostly provides an harness to fit our core logic and UI onto. It provides ways to expose our user interface through routes and ways to optimize initial data fetching to get those fast initial renders.
