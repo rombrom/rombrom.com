@@ -1,6 +1,6 @@
 ---
-tags: post
 date: 2024-04-22
+tags: ['post', 'endgame', '021.gg', 'project']
 layout: post
 title: A Tour of an NFT Rentals Front End at Cruising Altitude
 excerpt: |

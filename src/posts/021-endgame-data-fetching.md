@@ -1,5 +1,5 @@
 ---
-tags: post
+tags: ['post', 'endgame', '021.gg', 'project']
 layout: post
 title: 'Endgame Front End Deep Dive: Layers and Data'
 excerpt: |
