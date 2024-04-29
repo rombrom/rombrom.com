@@ -1,5 +1,4 @@
 ---
-hidden: true
 tags: post
 layout: post
 title: 'Endgame Front End Deep Dive: Layers and Data'
