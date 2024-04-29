@@ -240,6 +240,10 @@ aside > ol > li {
   flex-direction: column;
 }
 
+.article-preview h3 {
+  margin-block-start: 0;
+}
+
 .article-preview time {
   order: -1;
   line-height: var(--counter-size);
