@@ -247,4 +247,6 @@ Just get started. Do the work.
 
 ---
 
+**Got something to say?** [Reply on X](https://twitter.com/rombromz/status/1784891577233465724).
+
 **Note:** [this post is co-published](https://paragraph.xyz/@021/endgame-front-end-deep-dive-layers-and-data) on [021's Paragraph.xyz](https://paragraph.xyz/@021).
