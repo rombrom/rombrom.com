@@ -17,6 +17,7 @@ const footnoteCache = new Map();
 export default function configure(config) {
   config.setLibrary('md', markdown);
 
+  config.addGlobalData('date', 'git Created');
   config.addGlobalData('layout', 'base');
 
   config.addPassthroughCopy({
