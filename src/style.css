@@ -188,6 +188,12 @@ footer {
   margin-top: 25vh;
   padding: 3em 0;
   text-align: center;
+  font-size: 0.875rem;
+}
+
+footer::before {
+  content: '— ❦ —';
+  font-size: 1rem;
 }
 
 abbr {
@@ -227,10 +233,6 @@ aside a:last-of-type {
   font-size: 0.625rem;
 }
 
-/* aside > ol { */
-/*   display: flex; */
-/*   flex-direction: column; */
-/* } */
 aside > ol > li {
   margin-block: 1em;
 }
