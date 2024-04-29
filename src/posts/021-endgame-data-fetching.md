@@ -244,3 +244,7 @@ Anyway. What I'm trying to get at is that we just started doing the work. It did
 Coding is just as much a process of discovering the codified as it is codifying the discovered. One of the keys to becoming better is trying to make this feedback loop as tight as possible. Because many iterations through this loop will offset the practice more and more to codifying the discovered.
 
 Just get started. Do the work.
+
+---
+
+**Note:** [this post is co-published](https://paragraph.xyz/@021/endgame-front-end-deep-dive-layers-and-data) on [021's Paragraph.xyz](https://paragraph.xyz/@021).
