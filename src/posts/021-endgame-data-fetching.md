@@ -3,7 +3,8 @@ tags: post
 layout: post
 title: 'Endgame Front End Deep Dive: Layers and Data'
 excerpt: |
-  tbd
+  We often paralyze ourselves by giving up-front decisions an unhealty amount of weight.
+  While deep-diving Endgame's data-fetching logic, we provide insight in how we deal with this.
 ---
 
 It's strange. When we think about code it oftentimes evokes a sense of rigidness. A rule-bound universe where processes, inputs, outputs, are predictable things. The same input produces the same output. Paradoxically, the act of coding is anything but rigid. It's an extremely creative and relatively unbounded process. I think the architecture and module structure of a codebase is where this paradox causes the most clashes. This is evidenced partly by how many opinions and articles about code organization float around on the net. Another thing I noticed, as a person who frequents (web) dev related Subreddits, is how often questions on folder structure pop up.
