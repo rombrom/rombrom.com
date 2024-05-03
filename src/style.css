@@ -1,3 +1,5 @@
+/*** Globals ***/
+
 :root {
   box-sizing: border-box;
 }
@@ -40,6 +42,10 @@
     serif;
 }
 
+:target {
+  scroll-margin-top: 5rem;
+}
+
 body {
   max-width: 64ch;
   margin-inline: auto;
@@ -70,12 +76,6 @@ h1 {
   font-size: 2.618rem;
   margin-block-start: 0;
   margin-block-end: 1.5em;
-}
-
-h1 > i {
-  color: var(--color-yellow);
-  font-size: 0.5em;
-  margin-inline-start: 1em;
 }
 
 h2 {
@@ -114,7 +114,7 @@ hr {
   height: 2px;
   width: 1em;
   box-shadow: -1em 0 0 0 var(--color-yellow);
-  margin: 0;
+  margin: 3em 0;
 }
 
 a {
@@ -221,22 +221,11 @@ abbr:hover::after {
   opacity: 1;
 }
 
-aside {
-  color: var(--color-dark-grey);
-  font-size: 0.875rem;
-  margin: 3em 0;
-  padding-block-start: 1em;
-  border-top: 0.125em solid var(--color-black);
-}
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Components
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-aside a:last-of-type {
-  font-size: 0.625rem;
-}
-
-aside > ol > li {
-  margin-block: 1em;
-}
-
+/**/
 .article-preview {
   display: flex;
   flex-direction: column;
@@ -251,9 +240,38 @@ aside > ol > li {
   line-height: var(--counter-size);
 }
 
-:target {
-  scroll-margin-top: 5rem;
+/**/
+.footnotes {
+  color: var(--color-dark-grey);
+  font-size: 0.875rem;
 }
+
+.footnotes-list {
+  padding-inline-start: 0;
+}
+
+.footnote-backref {
+  font-size: 0.625rem;
+}
+
+.footnotes-item {
+  margin-block: 1em;
+}
+
+/**/
+.title > i {
+  color: var(--color-yellow);
+  font-size: 0.5em;
+  margin-inline-start: 1em;
+}
+
+.title hr {
+  margin: 0;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Media queries
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 @media (prefers-color-scheme: light) {
   :root {
