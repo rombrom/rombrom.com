@@ -152,11 +152,16 @@ code {
   padding: 0.125em 0.25em;
 }
 
-pre > code {
-  display: block;
-  padding: 1em;
+pre {
   overflow-x: auto;
-  margin-inline: -1em;
+  margin-inline: -1rem;
+  padding: 1rem;
+}
+
+pre > code {
+  background-color: inherit;
+  display: block;
+  flex: 1;
 }
 
 nav {
@@ -267,6 +272,60 @@ abbr:hover::after {
 
 .title hr {
   margin: 0;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Shiki
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+.shiki {
+  display: flex;
+}
+
+.shiki > [class^='language-'] {
+  flex: 1;
+  padding: 0;
+}
+
+.line {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+}
+
+.line:is(.diff, .highlighted)::before {
+  background-color: var(--line-color);
+  content: '';
+  display: block;
+  inset: 0;
+  opacity: 0.1;
+  margin-inline: -1rem;
+  width: calc(100% + 2rem);
+  pointer-events: none;
+  position: absolute;
+}
+
+.line.diff:is(.add, .remove)::after {
+  color: var(--line-color);
+  content: var(--line-content);
+  left: -1rem;
+  position: absolute;
+  text-align: center;
+  width: 1rem;
+}
+
+.line.diff.add {
+  --line-color: var(--color-green);
+  --line-content: '+';
+}
+
+.line.diff.remove {
+  --line-color: var(--color-red);
+  --line-content: '-';
+}
+
+.line.highlighted {
+  --line-color: var(--color-light-grey);
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

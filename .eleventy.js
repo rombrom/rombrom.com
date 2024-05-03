@@ -1,6 +1,10 @@
 import markdownIt from 'markdown-it';
 import markdownItAnchor from 'markdown-it-anchor';
 import Shiki from '@shikijs/markdown-it';
+import {
+  transformerNotationDiff,
+  transformerNotationHighlight,
+} from '@shikijs/transformers';
 import markdownItAbbr from 'markdown-it-abbr';
 import markdownItFootnotes from 'markdown-it-footnote';
 
@@ -12,7 +16,12 @@ const markdown = markdownIt({
   .use(markdownItAbbr)
   .use(markdownItAnchor)
   .use(markdownItFootnotes)
-  .use(await Shiki({ theme: 'houston' }));
+  .use(
+    await Shiki({
+      theme: 'houston',
+      transformers: [transformerNotationDiff(), transformerNotationHighlight()],
+    })
+  );
 
 export default function configure(config) {
   config.setLibrary('md', markdown);
