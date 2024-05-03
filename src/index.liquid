@@ -41,7 +41,7 @@ layout: base
 <h2>Notes</h2>
 
 {%- for post in collections.post reversed -%}
-{%- if post.data.hidden -%}{% continue %}{%- endif -%}
+{%- if NODE_ENV != 'development' and post.data.hidden -%}{% continue %}{%- endif -%}
 <article class="article-preview">
   <a href="{{ post.url }}">
     <h3>{{ post.data.title }}</h3>

@@ -19,6 +19,7 @@ export default function configure(config) {
 
   config.addGlobalData('date', 'git Created');
   config.addGlobalData('layout', 'base');
+  config.addGlobalData('NODE_ENV', process.env.NODE_ENV);
 
   config.addPassthroughCopy({
     'src/public': '.',
