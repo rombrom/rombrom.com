@@ -7,7 +7,7 @@ excerpt: |
   Testing
 ---
 
-More shop talk today. We're going to have some fun with End-to-End (E2E) testing blockchain applications.
+More shop talk today. We're going to have some fun with End-to-End testing blockchain applications.
 
 What I'm _not_ going to write about is testing philosophy. The discourse on why, what and how to test is saturated enough. I'll just leave it at the following. I like tests. They provide confidence my code is working as intended. I like tests with a high ROI better than tests with a low ROI. In some cases TDD helps in designing an API. In most cases E2E is all you need.
 
@@ -32,10 +32,10 @@ This article has become so big I'm required to add a table of contents. Also, if
 
 A long while back (over a year ago—84 years in web3 time), I [wrote a piece](https://medium.com/renftlabs/end-to-end-testing-dapps-with-playwright-rainbowkit-wagmi-and-anvil-90d1d143512c) on how we approached E2E testing for our v2 protocol application. The basic initial setup is still the same:
 
-1. Playwright as the test runner.
-2. Foundry's Anvil for running a testnet node.
-3. Wagmi & Viem to connect wallets and interface with the blockchain.
-4. Leverage Wagmi's [mock connector](https://wagmi.sh/react/api/connectors/mock) to set up a testing wallet.
+1. [Playwright](https://playwright.dev/) as the test runner.
+2. [Foundry's Anvil](https://book.getfoundry.sh/anvil/) for running a testnet node.
+3. [Wagmi](https://wagmi.sh/) & [Viem](https://viem.sh/) to connect wallets and interface with the blockchain.
+4. Leverage [Wagmi's mock connector](https://wagmi.sh/react/api/connectors/mock) to set up a testing wallet.
 
 The previous article provided a get-running-quick tutorial. This one will be more in-depth.
 
@@ -196,7 +196,13 @@ As we're changing the complete file, I'm adding the complete implementation belo
 ```tsx{% raw %}
 // app/_index.tsx
 import type { MetaFunction } from "@remix-run/node";
-import { useAccount, useConnect, useDisconnect, useSwitchChain } from "wagmi";
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useSwitchChain,
+  useChainId,
+} from "wagmi";
 
 export const meta: MetaFunction = () => {
   return [
@@ -206,7 +212,8 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const { address, chain, isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
+  const chainId = useChainId();
   const { connectAsync, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const { chains, switchChainAsync } = useSwitchChain();
@@ -217,13 +224,13 @@ export default function Index() {
 
         <p style={{ display: "flex", gap: 8 }}>
           Chain:
-          {chains.map((c) => (
+          {chains.map((chain) => (
             <button
-              key={c.id}
-              onClick={() => void switchChainAsync({ chainId: c.id })}
+              key={chain.id}
+              onClick={() => void switchChainAsync({ chainId: chain.id })}
               type="button"
             >
-              {c === chain && "✅"} {c.name} ({c.id})
+              {chain.id === chainId && "✅"} {chain.name} ({chain.id})
             </button>
           ))}
         </p>
@@ -642,14 +649,14 @@ First, lets add something to our UI so we can verify.
 ```tsx{% raw %}
 // app/_index.tsx
 import type { MetaFunction } from "@remix-run/node";
-import { useAccount, useConnect, useDisconnect useSwitchChain } from "wagmi"; // [!code --]
-import { // [!code ++]
-  useAccount, // [!code ++]
-  useConnect, // [!code ++]
-  useDisconnect, // [!code ++]
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
   useBlock, // [!code ++]
-  useSwitchChain, // [!code ++]
-} from "wagmi"; // [!code ++]
+  useSwitchChain,
+  useChainId,
+} from "wagmi";
 
 export const meta: MetaFunction = () => {
   return [
@@ -659,7 +666,8 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const { address, chain, isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
+  const chainId = useChainId();
   const { connectAsync, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const { chains, switchChainAsync } = useSwitchChain();
@@ -680,13 +688,13 @@ export default function Index() {
 
         <p style={{ display: "flex", gap: 8 }}>
           Chain:
-          {chains.map((c) => (
+          {chains.map((chain) => (
             <button
-              key={c.id}
-              onClick={() => void switchChainAsync({ chainId: c.id })}
+              key={chain.id}
+              onClick={() => void switchChainAsync({ chainId: chain.id })}
               type="button"
             >
-              {c === chain && "✅"} {c.name} ({c.id})
+              {chain.id === chainId && "✅"} {chain.name} ({chain.id})
             </button>
           ))}
         </p>
