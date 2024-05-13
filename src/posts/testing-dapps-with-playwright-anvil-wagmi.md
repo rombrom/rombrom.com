@@ -1015,6 +1015,10 @@ Be sure to check out [the example repository](https://github.com/re-nft/blockcha
 
 If you have any questions or remarks, be sure to [hit me up on X](https://x.com/rombromz).
 
+---
+
+**Note:** [this post is co-published](https://paragraph.xyz/@021/end-to-end-testing-blockchain-applications) on [021's Paragraph.xyz](https://paragraph.xyz/@021).
+
 *[E2E]: End-to-End
 *[RPC]: Remote Procedure Call
 *[ROI]: Return on Investment
