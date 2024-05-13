@@ -1,10 +1,10 @@
 ---
-hidden: true
 tags: ['post', 'endgame', '021.gg', 'project', 'testing']
 layout: post
 title: 'End-to-End Testing Blockchain Applications: Episode 2'
 excerpt: |
-  Testing
+  A walkthrough on how to do end-to-end testing blockchain applications
+  with Playwright, Wagmi/Viem and Anvil.
 ---
 
 More shop talk today. We're going to have some fun with End-to-End testing blockchain applications.
