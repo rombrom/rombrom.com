@@ -321,12 +321,12 @@ video {
   width: 1rem;
 }
 
-.line.diff.add {
+.line.add {
   --line-color: var(--color-green);
   --line-content: '+';
 }
 
-.line.diff.remove {
+.line.remove {
   --line-color: var(--color-red);
   --line-content: '-';
 }
