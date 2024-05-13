@@ -15,10 +15,12 @@ In all cases one test is infinitely better than no test.
 
 ### Table of contents
 
-This article has become so big I'm required to add a table of contents. Also, if you just want to see the code, there's an [example repostory on GitHub](https://github.com/rombrom/blockchain-web-app-e2e-testing-remix-wagmi) you can check out.
+This article has become so big I'm required to add a table of contents.
+
+If you just want to see the code, there's an [example repository on GitHub](https://github.com/re-nft/blockchain-web-app-e2e-testing-remix-wagmi) you can check out.
 
 - [Setting up for success](#setting-up-for-success)
-  - [Setting up Playwright](#setting-up-playwright)
+  - [Scaffolding](#scaffolding)
   - [Running a testnet node](#running-a-testnet-node)
   - [Setting up Wagmi](#setting-up-wagmi)
   - [How to mock a wallet](#how-to-mock-a-wallet)
@@ -37,9 +39,9 @@ A long while back (over a year ago—84 years in web3 time), I [wrote a piece](h
 3. [Wagmi](https://wagmi.sh/) & [Viem](https://viem.sh/) to connect wallets and interface with the blockchain.
 4. Leverage [Wagmi's mock connector](https://wagmi.sh/react/api/connectors/mock) to set up a testing wallet.
 
-The previous article provided a get-running-quick tutorial. This one will be more in-depth.
+The previous article provided a get-running-quick tutorial. This one will be more in-depth. The goal is setting up a web3-ready Remix boilerplate with a big focus on E2E testing.
 
-### Setting up Playwright
+### Scaffolding
 
 Lets get this show on the road. The following will create a Remix starter repository:
 
@@ -266,7 +268,7 @@ Time to see what we have so far. Make sure you have the Remix dev server (`npm r
 
 Finally we're getting to the meat. When attempting to conjure up a test for connecting a wallet we get stuck. There's no easy way to add wallet functionality to Playwright. There are projects like Synpress and Dappeteer (deprecated at the time of writing) which wrap MetaMask. Personally I'm not a fan of this approach as it's locking you into testing on a specific wallet. Any fundamental changes to MetaMask will require changes in your tests. Any fundamental breakages in MetaMask will break your tests. Icky.
 
-The way we like to solve this is making use of Wagmi's mock connector. The mock connector offers a fantastic low-level abstraction for connecting a wallet to a blockchain application. You can integrate it in your application to test wallet connections and interactions. It even allows you to test non-happy paths by passing error cases to it's `features` option. This allows you to test errors when switching chains, connecting wallets, or signing messages or transactions.
+The way we like to solve this is making use of Wagmi's mock connector. The mock connector offers a fantastic low-level abstraction for connecting a wallet to a blockchain application. You can integrate it in your application to test wallet connections and interactions. It even allows you to test non-happy paths by passing error cases to its `features` option. This allows you to test errors when switching chains, connecting wallets, or signing messages or transactions.
 
 We need to initialize the mock connector. There are several ways to do this. The simplest would be to add it to our list of `connectors` in `app/wagmi.ts`. The mock connector requires one argument with a list of accounts it's able to use. Lets limit this to the first two test accounts provided by anvil:
 
@@ -338,7 +340,7 @@ Running 2 tests using 2 workers
 
 Yep.
 
-The catch here is that the mock connector is initialized for everyone—regardless of environment. We could add some logic which initializes the mock connector only on development environments by checking Vite's `import.meta.env.DEV`. This is what we did for our v2 protocol application.
+The catch here is that the mock connector is initialized for everyone—regardless of environment. If we were to build and deploy this people would be able to connect with it, which could be highly confusing. We could add some logic which initializes the mock connector only on development environments by checking Vite's `import.meta.env.DEV`. This is what we did for our v2 protocol application and our [previous example repository](https://github.com/re-nft/dapp-e2e-example/blob/main/pages/_app.tsx#L19-L21).
 
 It works great, but there's an opportunity here to make the mock connector useful for more than just testing.
 
@@ -346,19 +348,19 @@ It works great, but there's an opportunity here to make the mock connector usefu
 
 You could say that the web is quite a volatile environment. Users have different systems, different configurations, different browsers, plugins, etc. I would argue web3 is an even more volatile environment. On top of different systems and configurations, there's a wide variety of wallet providers and an even bigger variety of tokens held in these wallets.
 
-One of the most powerful abilities you can give yourself and your team is being able to browse an application as any user. For Endgame we set up the mock connector in a way to allow us to do precisely this.
+One of the most powerful abilities you can give yourself and your team is being able to browse an application as any user. For [Endgame](https://endgame.021.gg/) we set up the mock connector in a way to allow us to do precisely this.
 
-We expose an interface which swaps our production configuration with a configuration leveraging the mock connector, initializing it on an arbitrary account. What's more, through this interface we could pass options into the mock connector's `features` configuration to test specific scenarios.
+We expose an interface which swaps our production configuration with a configuration leveraging the mock connector. This allows us to initialize a mock connection from any arbitrary account. What's more, through this interface we can pass options into the mock connector's `features` configuration to test specific scenarios. Scenario's like connection failure, user rejections, etc.
 
 The goals here are:
 
-1. Set up a function accepting a private key/address and mock connector `features`.
+1. Set up a function accepting a private key/address and the mock connector's `features` options.
 2. Expose this to the browser in some way. The path of least resistance (and least intrusion into the UI) is slapping it onto `window`.
 3. Set up a Playwright fixture which initializes mock connector configuration in test environments.
 
 ### It swaps the config
 
-The trick here is realizing that the Wagmi configuration can live inside React too. Remember how we wrapped it in a `useState()` earlier?
+The trick here is having the Wagmi configuration live inside React too. Remember how we wrapped it in a `useState()` earlier? We can access and expose its setter.
 
 ```tsx
   const [wagmiConfig] = useState(config); // [!code ++]
@@ -366,7 +368,7 @@ The trick here is realizing that the Wagmi configuration can live inside React t
 
 What we need is a factory function which creates a new Wagmi configuration for us. The resulting configuration can be passed to a `setWagmiConfig()` state dispatcher. Because it's part of React state, any update to this state makes parts of the application dependent on the configuration rerender automagically.
 
-The configuration factory will need to mirror most of our general configuration. The key thing to set up is the account it will be initialized for.
+The configuration factory will need to mirror most of our general configuration. The key thing to set up is the account it will be initialized for. See the highlighted line.
 
 ```tsx
 // app/wagmi.ts
@@ -396,7 +398,7 @@ export function createMockConfig( // [!code ++]
     : privateKeyToAccount(addressOrPkey); // [!code ++]
   const address = typeof account === "string" ? account : account.address; // [!code ++]
   return createConfig({ // [!code ++]
-    connectors: [mock({ accounts: [address], features })], // [!code ++]
+    connectors: [mock({ accounts: [address], features })], // [!code ++] // [!code highlight]
     chains, // [!code ++]
     client: ({ chain }) => createClient({ account, transport: http(), chain }), // [!code ++]
     ssr: true, // [!code ++]
@@ -474,7 +476,7 @@ Lets test it out.
 
 <video controls src="/wagmi-demo-pt4.webm" /></video>
 
-Yep. We can now browse our app pretending to be Vitalik.
+Cool. We can now browse our app pretending to be Vitalik.
 
 ### It hooks up a fixture
 
@@ -488,9 +490,9 @@ When testing blockchain applications there are a few things which are _very_ use
 - A date mocking mechanism so we can pretend it's earlier or later.
 - An account connection fixture so we don't have to repeat this for each test.
 
-The key thing here, is that you want to grab `test` from `@playwright/test` and re-export it with your fixtures attached. Instead of importing Playwright's `test`, you would import your own, extended with any fixtures you require.
+In order to set up a Playwright fixture you want to grab `test` from `@playwright/test` and use its `test.extend()` method. When you `export` the extended `test` the fixture you've set up will be made available. In your tests, instead of importing Playwright's `test`, you would import your own.
 
-Let's set up our first fixture. This one will concern itself with abstracting connecting a wallet through our mock connector. I'll provide some other useful fixtures in the next chapter.
+Let's set up our first fixture. This one will concern itself with abstracting connecting a wallet through our mock connector. I'll provide some more useful fixtures in the next section.
 
 Lets create two files: `tests/fixtures/wallet.ts` and `tests/fixtures/index.ts`. The former will house our application-specific wallet connection initialization. The latter we'll use as an entrypoint which re-exports anything from `@playwright/test` plus our extended `test` function.
 
@@ -519,14 +521,14 @@ export class WalletFixture {
   #page: Page;
 
   // The only thing we require for setting up a wallet connection
-  // through the mock connector is the page to look up locators.
+  // through the mock connector is the page to look up elements.
   constructor({ page }: { page: Page }) {
     this.#page = page;
   }
 
   // You can make this as contrived or expansive as required for
   // your use-case. For Endgame, we actually derive accounts from
-  // an `ANVIL_MNEMONIC` env and viem's `mnemonicToAccount()`.
+  // an `ANVIL_MNEMONIC` env with viem's `mnemonicToAccount()`.
   async connect(
     name: keyof typeof ACCOUNT_PKEYS,
     features?: MockParameters['features']
@@ -638,9 +640,9 @@ Amazing.
 
 ### It travels through time
 
-With Endgame parts of our core functionality depend on time elapsed. Primarily, any rental has a rent duration which, well, dictates the amount of seconds a rental will be considered being actively rented. In order to test the temporal aspects of the protocol we need to travel forwards in time. This way, when a rental has "expired", we can test functionality related to stopping rentals.
+With [Endgame](https://endgame.021.gg/) parts of our core functionality depend on time elapsed. Primarily, any rental has a rent duration which, well, dictates the amount of seconds a rental will be considered being actively rented. In order to test the temporal aspects of the protocol we need to travel forwards in time. This way, when a rental has "expired", we can test functionality related to stopping rentals.
 
-A good practice when dealing with time-sensitive protocols is to make your application depend on block time primarily. However, in many cases there's no escaping relying on a browser's `new Date()`. This kind of sucks, because we need to synchronize multiple time sources to reflect the same time.
+This kind of sucks, because we need to synchronize multiple time sources to reflect the same time. At the very least the chain's block timestamp and the browser's date.
 
 In this bonus round we'll implement a few Playwright fixtures which enables us to 1) mock the browser's Date initializer and 2) synchronize our test RPC node so that the latest block timestamp reflects the same time.
 
@@ -766,13 +768,11 @@ export const test = base.extend<{ anvil: typeof anvil }>({
 });
 ```
 
-Having an `anvil` fixture is generally useful as it allows you to query and interact with the test node inside of your tests. One way we used this is to create a snapshot before each test suite with `let id = await anvil.snapshot()` and restore it after with `await anvil.revert({ id })`.
+Having an `anvil` fixture is generally useful as it allows you to query and interact with the test node inside of your tests.
 
-I digress. Back to the future… err… dates.
+The most pragmatic way to approach synchronizing date sources is to have the browser synchronize with block time. Flipping this approach—syncing a testnet node to the current system time—could be the better approach but aving block time be leading yields less and simpler code in the fixture.
 
-We found the most pragmatic way to approach synchronizing date sources is to have the browser synchronize with block time. You could turn flip this approach but we found that having block time be leading yields less and more simple code in your fixture.
-
-Next up, the date fixture which will make use of our anvil fixture so we can use the newly created `anvil` client to fetch the block time to synchronize with the browser when required. We will add two methods.
+We're going to write a date fixture which will make use of our anvil fixture. In this date fixture we can use the `anvil` client to fetch the block time to synchronize the browser on. We will add two methods:
 
 1. `addDays(n)` which will advance the current `date` `n` amount of days.
 2. `set(date)` which will attempt to synchronize the block timestamp and browser `Date` constructor with the passed `date`.
@@ -920,7 +920,7 @@ test("synchronize times", async ({ date, page }) => { // [!code ++]
 
 When you run `npm test` again, we should get 4 passed tests now. Running this command a second time however makes the `"synchronize times"` test fail. If you read the code in our date fixture carefully you may know why: we can't set the time of our local testnet node to a date in the past. Only forwards.
 
-The solution here is making a snapshot of our chain state before our tests fire and restore this snapshot after all tests are finished.
+The solution here is making a snapshot of our chain state before our tests fire and restore this snapshot after all tests are finished. We can leverage our `anvil` fixture for this.
 
 ```ts
 // tests/smoke.spec.ts
@@ -1009,9 +1009,9 @@ Check it out.
 
 ## In closing
 
-Woah. This was quite the trip. I hope this walkthrough is helpful for some of you. It was definitely fun to write. I also hope the peak behind the curtain on how we approached testing challenges for Endgame is as enjoyable to read as it is to share.
+Woah. This was quite the trip. I hope this walkthrough is helpful for some of you. It was definitely fun to write. I also hope the peak behind the curtain on how we approached testing challenges for [Endgame](https://endgame.021.gg/) is as enjoyable to read as it is to share.
 
-Be sure to check out the example repository, which should be straightforward to get up and running. I think it's a decent web3 front end development springboard. The commits to the repository roughly corroborate to each of the sections in this walkthrough.
+Be sure to check out [the example repository](https://github.com/re-nft/blockchain-web-app-e2e-testing-remix-wagmi), which should be straightforward to get up and running. I think it's a decent web3 front end development springboard. The commits to the repository roughly corroborate to each of the sections in this walkthrough.
 
 If you have any questions or remarks, be sure to [hit me up on X](https://x.com/rombromz).
 
