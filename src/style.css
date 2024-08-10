@@ -38,7 +38,7 @@
 
   background-color: var(--bg);
   color: var(--fg);
-  font: clamp(1rem, 3vw, 1.5rem) / 1.618 Georgia, 'Times New Roman', Times,
+  font: clamp(1rem, 3vw, 1.5rem) / 1.618 Georgia, "Times New Roman", Times,
     serif;
 }
 
@@ -80,7 +80,7 @@ h1 {
 
 h2 {
   color: var(--color-red);
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-style: italic;
   font-size: clamp(2rem, 10vw, 4.235rem);
   margin: 1.5em 0;
@@ -100,7 +100,7 @@ h3 {
 
 h1::after,
 h2::after {
-  content: '';
+  content: "";
   color: var(--color-red);
   position: absolute;
   top: 100%;
@@ -152,6 +152,10 @@ code {
   padding: 0.125em 0.25em;
 }
 
+em {
+  color: var(--color-yellow);
+}
+
 pre {
   overflow-x: auto;
   margin-inline: -1rem;
@@ -197,7 +201,7 @@ footer {
 }
 
 footer::before {
-  content: '— ❦ —';
+  content: "— ❦ —";
   font-size: 1rem;
 }
 
@@ -289,7 +293,7 @@ video {
   display: flex;
 }
 
-.shiki > [class^='language-'] {
+.shiki > [class^="language-"] {
   flex: 1;
   padding: 0;
 }
@@ -302,7 +306,7 @@ video {
 
 .line:is(.diff, .highlighted)::before {
   background-color: var(--line-color);
-  content: '';
+  content: "";
   display: block;
   inset: 0;
   opacity: 0.1;
@@ -323,12 +327,12 @@ video {
 
 .line.add {
   --line-color: var(--color-green);
-  --line-content: '+';
+  --line-content: "+";
 }
 
 .line.remove {
   --line-color: var(--color-red);
-  --line-content: '-';
+  --line-content: "-";
 }
 
 .line.highlighted {
