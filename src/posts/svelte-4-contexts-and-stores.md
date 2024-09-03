@@ -257,6 +257,10 @@ and SvelteKit's documentation.
 
 🖖
 
+---
+
+**Let me know if this blows.** [Reply on X](https://x.com/rombromz/status/1830925277255348651).
+
 [^isolate-stores]:
     The [SvelteKit docs on state
     management](https://kit.svelte.dev/docs/state-management#avoid-shared-state-on-the-server)
