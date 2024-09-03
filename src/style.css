@@ -230,11 +230,36 @@ abbr:hover::after {
   opacity: 1;
 }
 
+figure {
+  margin: 0;
+}
+
+figcaption {
+  color: var(--color-dark-grey);
+  font-style: italic;
+  font-size: 0.75em;
+  margin-inline: 1rem;
+  text-align: center;
+}
+
+iframe {
+  aspect-ratio: 4/3;
+  border: solid var(--color-yellow) 0.125rem;
+  min-height: 540px;
+  width: 100%;
+}
+
 img,
-video {
+figure,
+video,
+iframe {
   height: auto;
   max-width: calc(100% + 2rem);
   margin-inline: -1rem;
+}
+
+figure > :where(img, iframe) {
+  margin-inline: 0;
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
