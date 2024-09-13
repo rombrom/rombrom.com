@@ -38,7 +38,7 @@ suckers for efficiency, erring on the side of least effort.
 
 I'm reminded of how, back in the 90's/00's we were able to recall from memory
 complete 10-digit phone numbers of family members, close friends, maybe some
-institutions. We've "lost" this ability because of mobile phones. Suddenly,
+institutions. We've lost this ability because of mobile phones. Suddenly,
 for our "survival", we weren't required to know these by heart. We merely needed
 to know how to perform an action yielding the same result: e.g. look up a contact
 and press (or tap) a button.
