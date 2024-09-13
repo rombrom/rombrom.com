@@ -79,7 +79,7 @@ the brain and body become more and more accustomed to being "hammerman",
 incorporating the tool as a natural part of the body.
 
 Becoming skilled at something is all about finding a path for the brain to
-become lazy in performing something complex. That when seeing experts and
+become lazy in performing something complex. When seeing experts and
 professionals perform it always looks so easy, effortless. A key thing,
 however, is that they undertook a lot of effort to get to that point. They had
 to develop a true understanding first.
@@ -94,8 +94,8 @@ roles, ranging from fact-checker, therapist, programming tutor, conscience?
 
 Personally, I want to be wary of LLMs robbing us of the pleasure of finding
 things out. Maybe it's fine to lose a little bit of understanding for more
-efficiency in some aspects of life, work. On the other hand is infinitely more
-rewarding. Lets hope our (somewhat mature) brains are capable enough to know
+efficiency in some aspects of life, work. On the other hand, it is infinitely more
+rewarding to reach understanding. Lets hope our (somewhat mature) brains are capable enough to know
 when we need to choose between instant versus delayed gratification.
 
 I guess we can always ask the LLM.
