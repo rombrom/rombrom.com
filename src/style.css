@@ -262,6 +262,13 @@ figure > :where(img, iframe) {
   margin-inline: 0;
 }
 
+figure:has(iframe) {
+  --max-width: 1440px;
+  margin-inline-start: calc((min(var(--max-width), 100dvw) - 2rem) / -2 + 50%);
+  width: calc(100dvw - 2rem);
+  max-width: var(--max-width);
+}
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Components
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
