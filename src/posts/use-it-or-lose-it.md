@@ -1,7 +1,8 @@
 ---
+date: 2024-09-13
 tags: ["post", "ai", "llm", "artificial intelligence", "thoughts"]
 layout: post
-title: Lazy Brain Harmful or Just Efficient?
+title: "Use it or lose it: Why expertise is more valuable with AI"
 excerpt: If LLMs, like other technologies, are also extensions of man,
   ill they extend our brains' disposition towards laziness?
 ---
@@ -68,7 +69,7 @@ might make the students more susceptible to taking paths of least effort—e.g.
 asking for answers directly as opposed to setting the LLM up to help them
 in forming an actual understanding of the problems.
 
-## Lazy Brain Plugins
+## Plugins
 
 One of the core mechanisms in which, I believe, technology functions is how
 every technology is an "extension of man."[^mcluhan] The classic example is
