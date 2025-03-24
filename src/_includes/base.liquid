@@ -24,7 +24,13 @@
 
     <title>{{ pageTitle }}</title>
 
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/css/root.css" />
+
+    {% if stylesheet %}
+      <link rel="stylesheet" href="/css/{{ stylesheet }}" />
+    {% else %}
+      <link rel="stylesheet" href="/css/style.css" />
+    {% endif %}
 
     <meta name="description" content="{{ pageDescription }}" />
     <meta property="og:description" content="{{ pageDescription }}" />
