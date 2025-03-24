@@ -125,7 +125,16 @@ dl > dd {
   margin-inline-start: 0;
 }
 
-.competencies {
+p + p {
+  margin-block-start: 0.875rem;
+}
+
+.competencies h3 {
+  margin-block: 0.5rem;
+  font-size: 0.875em;
+}
+
+.competencies ul {
   display: grid;
   font-size: 0.875em;
   gap: 0.25rem;
