@@ -1,0 +1,32 @@
+---
+layout: base
+---
+
+<nav>
+  <a href="/">‹ Home</a>
+</nav>
+
+<article>
+  <header>
+    <h1>{{ title }}</h1>
+    <p>{{ excerpt }}</p>
+  </header>
+
+  {{ content }}
+
+  {%- if page.footnotes | size -%}
+  <aside>
+    <ol>
+      {% for footnote in page.footnotes %}
+      <li id="note{{ forloop.index }}">
+        {{ footnote }}
+        <a href="#notesrc{{ forloop.index }}">↩</a>
+      </li>
+      {% endfor %}
+    </ol>
+  </aside>
+  {% endif %}
+
+  <p><a href="/">‹ Back</a></p>
+</article>
+
