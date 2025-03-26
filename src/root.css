@@ -202,7 +202,7 @@ figure:has(iframe) {
  * Media queries
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-@media (prefers-color-scheme: light) {
+@media print {
   :root {
     --fg: var(--color-foreground);
     --bg: var(--color-background);
