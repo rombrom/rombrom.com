@@ -205,7 +205,7 @@ figure:has(iframe) {
 @media print {
   :root {
     --fg: var(--color-foreground);
-    --bg: var(--color-background);
+    --bg: transparent;
 
     --fg-code: var(--color-black);
     --bg-code: var(--color-light-grey);
