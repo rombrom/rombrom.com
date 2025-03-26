@@ -10,11 +10,15 @@ into the community.
 
 The mascot and brand was designed by the talented Leonor Meirelles. User interface by yours truly.
 
-
 <figure>
   <img alt="" src="/coin-fun/home.png" />
   <figcaption>Zoom in! It's hard to see in the preview but we had a very cool scanline effect going on.</figcaption>
 </figure>
+
+One of our goals was making launching coins faster than on Pump.fun. I think
+we did a pretty good job:
+
+<video controls src="/coin-fun/launch.webm" /></video>
 
 People could trade using their own wallets, but we allowed people to sign up
 with email, making placing trades frictionless:
