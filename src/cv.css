@@ -185,16 +185,6 @@ footer {
   }
 }
 
-@media print {
-  :root {
-    font-size: 8pt;
-  }
-
-  .competencies {
-    grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
-  }
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     --color-excerpt: var(--color-dark-grey);
@@ -203,4 +193,29 @@ footer {
     --color-separator: var(--color-dark-grey);
     --color-title: var(--color-red);
   }
+}
+
+@media print {
+  :root {
+    --color-excerpt: var(--color-black);
+
+    font-size: 8pt;
+  }
+
+  body {
+    margin: 1cm 1cm;
+  }
+
+  .competencies {
+    grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
+  }
+
+  footer {
+    display: none;
+  }
+}
+
+@page {
+  size: auto;
+  margin: 1cm 1cm;
 }
