@@ -8,7 +8,9 @@ Coin.fun was 021's take on a memecoin launcher. In the true spirit of Web3, we
 wanted to make it community-owned. All transaction fees would be injected back
 into the community.
 
-The mascot and brand was designed by the talented Leonor Meirelles. User interface by yours truly.
+The mascot and brand was designed by the talented [Leonor
+Meirelles](https://www.linkedin.com/in/leonor-meirelles/). User interface by
+yours truly.
 
 <figure>
   <img alt="" src="/coin-fun/home.png" />
