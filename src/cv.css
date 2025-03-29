@@ -206,6 +206,10 @@ footer {
     margin: 1cm 1cm;
   }
 
+  dl {
+    grid-template-columns: 120px 1fr 120px 1fr;
+  }
+
   .competencies {
     grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
   }
