@@ -12,6 +12,7 @@
   "scripts": {
     "build": "NODE_ENV=production eleventy --input src",
     "dev": "NODE_ENV=development eleventy --input src --serve",
+    "format": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -36,5 +37,9 @@
     "markdown-it-abbr": "^2.0.0",
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-footnote": "^4.0.0"
+  },
+  "devDependencies": {
+    "@shopify/prettier-plugin-liquid": "^1.9.0",
+    "prettier": "^3.5.3"
   }
 }
