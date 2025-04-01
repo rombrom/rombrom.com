@@ -114,7 +114,7 @@ header > nav {
 dl {
   display: grid;
   font-size: 0.875em;
-  grid-template-columns: 120px 1fr 120px 1fr;
+  grid-template-columns: 80px 1fr 80px 1fr;
   /*gap: 0.25rem;*/
 }
 
@@ -177,7 +177,7 @@ footer {
 
 @media (max-width: 575px) {
   dl {
-    grid-template-columns: 120px 1fr;
+    grid-template-columns: 80px 1fr;
   }
 }
 
@@ -203,7 +203,7 @@ footer {
   }
 
   dl {
-    grid-template-columns: 120px 1fr 120px 1fr;
+    grid-template-columns: 80px 1fr 80px 1fr;
   }
 
   .competencies {
