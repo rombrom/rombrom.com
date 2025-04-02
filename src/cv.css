@@ -146,6 +146,9 @@ article {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+article + article {
   margin-block-start: 1.618rem;
 }
 
