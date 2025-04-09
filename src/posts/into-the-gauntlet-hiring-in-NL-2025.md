@@ -1,7 +1,7 @@
 ---
 tags: ["post", "hiring", "assessment", "job market"]
 layout: post
-title: "Into the Gauntlet: my job application process"
+title: "Into the Gauntlet: gauging candidate caliber"
 excerpt: As I was looking for new opportunities (as they say), I
   figured it'd be cool to document parts of the process.
 ---
