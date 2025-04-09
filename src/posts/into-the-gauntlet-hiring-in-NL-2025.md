@@ -6,6 +6,10 @@ excerpt: As I was looking for new opportunities (as they say), I
   figured it'd be cool to document parts of the process.
 ---
 
+I'm on the market currently and figured it's a great opportunity to
+write something about the current hiring landscape in NL. This post
+will zoom in on technical assessment.
+
 Finding a job as a software developer is weird nowadays. I've heard stories of
 companies with an amount of interview rounds that would put Dante's circles of
 Hell to shame. Among these rounds is the now often-required (and dreaded)
@@ -19,15 +23,14 @@ dev. There's leetcode and other skill testing platforms (with or without
 anti-LLM-cheat features), technical assessments, live coding and/or
 whiteboarding, you name it.
 
-The companies I have applied for currently all approach this issue differently,
-each leveraging a different method. Out of these I can already say that I've
-enjoyed the live coding assignments most. I believe this comes closest to
-simulating the actual day-to-day for any role. Having an "expert" available for
-questions and nudges, being able to have an actual dialogue, has been incredibly
-valuable (and fun!) for me. You get a decent sense of how interactions will go in a
-professional setting. I think this works the same way for the other side. An
-added bonus here is that live coding with screen and camera sharing acts as a
-"shield" against cheaters.
+The companies I have applied for currently all approach this issue differently.
+Out of these I can already say that I've enjoyed the live coding assignments
+most. I believe this comes closest to simulating the actual day-to-day for any
+role. Having an "expert" available for questions and nudges, being able to have
+an actual dialogue, has been incredibly valuable (and fun!) for me. You get a
+decent sense of how interactions will go in a professional setting. I think
+this works the same way for the other side. An added bonus here is that live
+coding with screen and camera sharing acts as a "shield" against cheaters.
 
 Another method companies like to employ are technical assessments in the form
 of a small project. To goal is always to "see how you think" which I think is
