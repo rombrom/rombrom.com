@@ -27,12 +27,12 @@ The arguments go that the time and effort required of a candidate have a shitty
 ROI, and that the assessment doesn't bear any resemblance to the actual
 day-to-day.
 
-The ROI on excessive take-homes is shit. I've heard of business offering
-compensation for the time spent, which I think is fair to the candidate. I
-believe there might be a way to leverage take-homes to your advantage by making
-them public. The result is my intellectual property.
+Yes, generally the ROI on excessive take-homes is shit. I've heard of business offering
+compensation for the time spent, which I think is fair to the candidate. Honestly though
+, I believe there might be a way to leverage take-homes to your advantage by making
+them public. The result is my intellectual property, right?
 
-But consider that the ROI for a company trying to find _the candidate_ is also
+But consider that the ROI for a company trying to find _the_ candidate is also
 shit. Hiring is an absurdly expensive gig. Haseeb Qureshi estimated that
 extending an offer to a candidate [ costs a business about $24.000,—
 ](https://haseebq.com/how-not-to-bomb-your-offer-negotiation/#what-a-job-negotiation-means-to-an-employer).
@@ -41,7 +41,7 @@ think investing a little bit of time yourself is not a tall ask.[^napkin]
 
 The latter argument I think is more fair. Leetcode is something which you'll
 hardly encounter in actual work. Still, there's tremendous value in being
-skilled with the concepts, data structures and algos leetcode represent.
+skilled in the concepts, data structures and algos leetcode represent.
 Personally, the times I had to wrestle with algos can be counted on one, maybe
 two hands. But in my years of doing web dev I've at least garnered enough
 contextual knowledge to navigate these problems appropriately.
@@ -67,6 +67,19 @@ able to have an actual dialogue, has been incredibly valuable (and fun!) for
 me. I got a decent sense of how interactions will go in a professional setting.
 I think this works the same way for the other side.[^cheators]
 
+One company tasked me with a bug hunt in a .NET codebase. Note that I don't have
+much experience in the C# stack, but reading code is a very universal skill. With some
+help of my "colleagues" helping me around with the IDE and answering questions,
+I think I did pretty well concerning the lack of stack-specific experience.
+
+Another one prepared a small Next.js project where the challenge was to write
+an API route endpoint for "check ins" and hooking it up to a front end with
+some styling requirements. Aside from looking how a candidate fares in a
+full-stack framework, I believe the main challenge here was dealing with UTC
+dates in JavaScript. This is always great fun.
+
+Overal, this was fun and left me with a great feel for collaborative vibes.
+
 ### Take-homes
 
 Another method companies like to employ are technical assessments in the form
@@ -82,12 +95,14 @@ applicant. This can be unfair at times, but at the same time it's an
 opportunity to get a better sense of how a company treats scope. As an example,
 I recently completed an assessment where the goal was to create a "team budget
 tracking" application. You can [find it on my
-GitHub](https://github.com/rombrom/budgets-app-example). The company in
-question follows the front-end/back-end split in role responsibilities. I
-applied for a full-stack role. The projected time was 2 hours in the assessment
-documentation. Over the phone they projected 2-4 hours. As it goes with
-estimates, you should multiply the estimate by at least 4 to get into the
-ballpark which potentially aligns with reality. I spent about a day total.
+GitHub](https://github.com/rombrom/budgets-app-example).
+
+The company in question follows the front-end/back-end split in role
+responsibilities. I applied for a full-stack role. The projected time was 2
+hours in the assessment documentation. Over the phone they projected 2-4 hours.
+As it goes with estimates, you should multiply the estimate by at least 4 to
+get into the ballpark which potentially aligns with reality. I spent about a
+day total.
 
 To anyone writing assessments: multiplying by 4 is "estimating 101." Be
 realistic in what you expect from a candidate.
@@ -96,8 +111,8 @@ Now, in this instance I didn't really mind the discrepancy between expectation
 and reality. I figured doing this assessment was:
 
 1. a great opportunity for keeping skills fresh.
-2. a fantastic way to get something on my GitHub others
-   could look at.
+2. _a fantastic way to get something on my GitHub others
+   could look at._
 3. just plain fun to do.
 
 ### Leetcode
@@ -128,7 +143,7 @@ point while the clock kept ticking, and finished with 6 minutes left.
 
 Again though—and this is probably just my nature—I had a lot of fun figuring
 out the tasks and their constraints. I allowed myself time to prototype and
-check some things because, I approached the Codility test as a fun exercise and
+check some things, because I approached the Codility test as a fun exercise and
 not make-or-break.
 
 ## If I would hire
@@ -144,7 +159,9 @@ candidates might get nerve-struck. Here I would argue that it's the
 interviewer's responsibility of making the candidate feel at ease. Interviews
 are not a talent show. If the issue persists it might be a decent idea to have
 alternatives available to the candidate, or, maybe, it's an indication it's not
-a match. But please, keep the process fair and human. We're dealing with people
+a match.
+
+But please, keep the process fair and human. We're dealing with people
 here.
 
 Still, I believe the nuances and layers of a personal, live, interactive
