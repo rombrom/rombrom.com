@@ -72,7 +72,7 @@ much experience in the C# stack, but reading code is a very universal skill. Wit
 help from my "colleagues" concerning the IDE and some questions I had exploring,
 I think I did pretty well concerning the lack of stack-specific experience.
 
-Another one prepared a small Next.js project where the challenge was to write
+Another company prepared a small Next.js project where the challenge was to write
 an API route endpoint for "check ins" and hooking it up to a front end with
 some styling requirements. Aside from looking how a candidate fares in a
 full-stack framework, I believe the main challenge here was dealing with UTC
