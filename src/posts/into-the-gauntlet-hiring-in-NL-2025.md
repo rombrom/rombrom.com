@@ -69,7 +69,7 @@ I think this works the same way for the other side.[^cheators]
 
 One company tasked me with a bug hunt in a .NET codebase. Note that I don't have
 much experience in the C# stack, but reading code is a very universal skill. With some
-help of my "colleagues" helping me around with the IDE and answering questions,
+help from my "colleagues" concerning the IDE and some questions I had exploring,
 I think I did pretty well concerning the lack of stack-specific experience.
 
 Another one prepared a small Next.js project where the challenge was to write
