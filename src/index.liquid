@@ -3,46 +3,52 @@ eleventyImport:
   collections: ['post']
 layout: base
 ---
-
 <header>
   <h1 class="title">
     rombrom
-    <i>.com <hr aria-hidden /> .eth</i>
+    <i
+      >.com
+      <hr aria-hidden>
+      .eth</i
+    >
   </h1>
 </header>
 
 <section>
   <p>
-    Proud dad who's making and breaking the web. Est. 1987. This is my place for
-    notes on web development and other meanderings on technology and society. I
-    don't write often because I love building with others more.
+    Proud dad who's making and breaking the web. Est. 1987. This is my place for notes on web development and other
+    meanderings on technology and society. I don't write often because I love building with others more.
   </p>
 
   <p>
-  <em>Need someone to help craft or direct delightful web experiences?
-    Check out <a href="/cv/">my <abbr title="Curriculum Vitae">my CV</abbr></a>
-    and get in touch: <a href="https://noop.digital">noop.digital</a></em>.
+    <em
+      >Need someone to help craft or direct delightful web experiences? Check out
+      <a href="/cv/">my <abbr title="Curriculum Vitae">my CV</abbr></a> and get in touch:
+      <a href="https://noop.digital">noop.digital</a></em
+    >.
   </p>
 
   <p>
-    I do some things on <a href="https://github.com/rombrom">GitHub</a>.
-    I have migrated to <a href="https://bsky.app/profile/rombrom.com">🦋 Bluesky</a>
-    and don't <a href="https://x.com/rombromz">Xeet</a> anymore. I have a
+    I do some things on <a href="https://github.com/rombrom">GitHub</a>. I have migrated to
+    <a href="https://bsky.app/profile/rombrom.com">🦋 Bluesky</a> and don't
+    <a href="https://x.com/rombromz">Xeet</a> anymore. I have a
     <a href="https://www.linkedin.com/in/rommert/">LinkedIn</a> I barely use.
   </p>
 
-  <p>I've been making web things for two decades. Most of the time it's fun! <img class="icon" src="/smirky.webp" alt="☺" /> Sometimes it's <abbr title="See: 'Losing'">Fun ☺</abbr>
+  <p>
+    I've been making web things for two decades. Most of the time it's fun!
+    <img class="icon" src="/smirky.webp" alt="☺"> Sometimes it's <abbr title="See: 'Losing'">Fun ☺</abbr>
   </p>
 </section>
 
 <h2>Notes</h2>
 
 {%- for post in collections.post reversed -%}
-{%- if NODE_ENV != 'development' and post.data.hidden -%}{% continue %}{%- endif -%}
-<article class="article-preview">
-  <a href="{{ post.url }}">
-    <h3>{{ post.data.title }}</h3>
-  </a>
-  <time>{{ post.date | prettyDate }}</time>
-</article>
+  {%- if NODE_ENV != 'development' and post.data.hidden -%}{% continue %}{%- endif -%}
+  <article class="article-preview">
+    <a href="{{ post.url }}">
+      <h3>{{ post.data.title }}</h3>
+    </a>
+    <time>{{ post.date | prettyDate }}</time>
+  </article>
 {%- endfor -%}
