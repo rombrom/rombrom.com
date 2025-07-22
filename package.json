@@ -30,16 +30,16 @@
   },
   "homepage": "https://github.com/rombrom/romrbrom.com#readme",
   "dependencies": {
-    "@11ty/eleventy": "^3.0.0",
-    "@shikijs/markdown-it": "^1.22.0",
-    "@shikijs/transformers": "^1.22.0",
     "markdown-it": "^14.1.0",
     "markdown-it-abbr": "^2.0.0",
     "markdown-it-anchor": "^9.2.0",
-    "markdown-it-footnote": "^4.0.0"
+    "markdown-it-footnote": "^4.0.0",
+    "@11ty/eleventy": "3.1.2",
+    "@shikijs/markdown-it": "3.8.1",
+    "@shikijs/transformers": "3.8.1"
   },
   "devDependencies": {
-    "@shopify/prettier-plugin-liquid": "^1.9.0",
-    "prettier": "^3.5.3"
+    "@shopify/prettier-plugin-liquid": "1.9.3",
+    "prettier": "3.6.2"
   }
 }
