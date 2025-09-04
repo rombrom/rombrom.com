@@ -112,9 +112,9 @@ interviews, and my wife for keeping up with my mental vomit during this time.
 
 I consider myself privileged to have been able to go through the experience
 like this. It will be different for others. You might value different things.
-You might not have the time or resources to make this a edifying thing.
+You might not have the time or resources to make this an edifying thing.
 
-Still, I've become convinced that, when given the chance, look for places where
+Still, I've become convinced that, when given the chance: look for places where
 you can do your best work.
 
 [^wissel]:
