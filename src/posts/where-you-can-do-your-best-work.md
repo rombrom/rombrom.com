@@ -11,7 +11,7 @@ to write about its conclusion for a while. The search went well,
 albeit a tad unorthodox from my side, and as of June I'm crushing it at
 [Wissel.nl](https://www.wissel.nl)[^wissel].
 
-I'm a Ruby guy now.
+I'm a Ruby guy now.[^ruby]
 
 ## How did I get here?
 
@@ -120,3 +120,10 @@ you can do your best work.
 [^wissel]:
     We're a giftcard exchange. You can sell or trade in gift cards or
     buy them with a good discount. [Check us out!](https://www.wissel.nl)
+
+[^ruby]:
+    My first tango with ruby must've been around 2009. I was heavy into
+    some web frameworks of the time: CodeIgnighter (which became Laravel),
+    CakePHP, Django, and of course Rails. Back then I didn't take enough
+    effort to grok Ruby—I came from PHP. Now I find Ruby very fun and
+    elegant (albeit a bit magical at times).
