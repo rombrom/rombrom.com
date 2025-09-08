@@ -123,7 +123,8 @@ you can do your best work.
 
 [^ruby]:
     My first tango with ruby must've been around 2009. I was heavy into
-    some web frameworks of the time: CodeIgnighter (which became Laravel),
-    CakePHP, Django, and of course Rails. Back then I didn't take enough
-    effort to grok Ruby—I came from PHP. Now I find Ruby very fun and
-    elegant (albeit a bit magical at times).
+    some web frameworks of the time: CodeIgnighter (~~which became Laravel~~,
+    Edit: Laravel took inspiration from CodeIgnighter and was not a fork.
+    Thanks, Marijn!), CakePHP, Django, and of course Rails. Back then I didn't
+    take enough effort to grok Ruby—I came from PHP. Now I find Ruby very fun
+    and elegant (albeit a bit magical at times).
