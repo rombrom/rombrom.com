@@ -114,8 +114,8 @@ header > nav {
 dl {
   display: grid;
   font-size: 0.875em;
-  grid-template-columns: 80px 1fr 80px 1fr;
-  /*gap: 0.25rem;*/
+  grid-template-columns: auto 1fr auto 1fr;
+  column-gap: 2ch;
 }
 
 dl > dt {
@@ -180,7 +180,13 @@ footer {
 
 @media (max-width: 575px) {
   dl {
-    grid-template-columns: 80px 1fr;
+    grid-template-columns: auto 1fr;
+  }
+}
+
+@media (min-width: 576px) {
+  dl > dt:nth-last-of-type(odd) {
+    margin-inline-start: 4.5ch;
   }
 }
 
@@ -211,6 +217,10 @@ footer {
 
   .competencies {
     grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
+  }
+
+  section:last-of-type {
+    break-before: page;
   }
 
   footer {
