@@ -190,19 +190,10 @@ footer {
   }
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-excerpt: var(--color-dark-grey);
-    --color-heading: inherit;
-    --color-link: var(--color-black);
-    --color-separator: var(--color-dark-grey);
-    --color-title: var(--color-red);
-  }
-}
-
 @media print {
   :root {
     --color-excerpt: var(--color-black);
+    --color-separator: var(--color-light-grey);
 
     font-size: 8pt;
   }
